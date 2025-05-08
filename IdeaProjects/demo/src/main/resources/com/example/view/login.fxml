@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.controller.AdminController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #f5f5f5;">
+
+    <top>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="30" />
+            </padding>
+            <Label text="Sistema de Parqueadero" style="-fx-text-fill: #2c3e50;">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label text="Acceso Administrador" style="-fx-text-fill: #7f8c8d;">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="15" maxWidth="350">
+            <padding>
+                <Insets top="20" right="40" bottom="20" left="40" />
+            </padding>
+
+            <VBox spacing="5">
+                <Label text="Cédula" style="-fx-text-fill: #2c3e50;">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="cedulaField" promptText="Ingrese su número de cédula">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextField>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Nombre" style="-fx-text-fill: #2c3e50;">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="nombreField" promptText="Ingrese su nombre completo">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextField>
+            </VBox>
+
+            <Button fx:id="loginButton" text="Iniciar Sesión"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand"
+                    prefWidth="200" prefHeight="40" onAction="#Login">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Button>
+
+            <Label fx:id="mensajeError" text="" style="-fx-text-fill: #e74c3c;" />
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets bottom="20" />
+            </padding>
+            <Label text="© 2025 Sistema de Parqueadero" style="-fx-text-fill: #95a5a6;" />
+        </HBox>
+    </bottom>
+
+</BorderPane>
