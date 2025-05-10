@@ -6,18 +6,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class BuscarClienteController {
 
@@ -26,6 +27,9 @@ public class BuscarClienteController {
 
     @FXML
     private Button btnLimpiar;
+
+    @FXML
+    private Button btnVehiculosCliente;
 
     @FXML
     private ComboBox<String> cmbCriterioBusqueda;
@@ -70,6 +74,7 @@ public class BuscarClienteController {
     private TextField txtBusqueda;
 
     ClienteService clienteService = ClienteService.getInstancia();
+    private Cliente clienteSeleccionado;
 
     @FXML
     public void initialize() {
@@ -85,7 +90,49 @@ public class BuscarClienteController {
 
         // Cargar datos
         tablaClientes.setItems(FXCollections.observableArrayList(clienteService.obtenerClientes()));
+        actualizarEtiquetaResultados();
+
+        tablaClientes.setRowFactory(tv -> {
+            TableRow<Cliente> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    Cliente clienteSeleccionado = row.getItem();
+                    abrirVentanaEdicion(clienteSeleccionado);
+                }
+            });
+            return row;
+        });
     }
+
+    private void abrirVentanaEdicion(Cliente cliente) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/view/editarCliente.fxml"));
+            Parent root = loader.load();
+
+            // Pasar el cliente al controlador de edición
+            EditarClienteController controller = loader.getController();
+            controller.setCliente(cliente);
+            controller.setClienteService(clienteService); // si es necesario
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Cliente");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            // Refrescar la tabla tras cerrar la ventana
+            tablaClientes.refresh();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void actualizarEtiquetaResultados() {
+        int total = tablaClientes.getItems().size();
+        lblResultados.setText(total + (total == 1 ? " resultado encontrado" : " resultados encontrados"));
+    }
+
+
 
     @FXML
     private void buscarClientes() {
@@ -118,6 +165,45 @@ public class BuscarClienteController {
         }
 
         tablaClientes.setItems(FXCollections.observableArrayList(filtrados));
+        actualizarEtiquetaResultados();
+    }
+
+    public void eliminar(ActionEvent actionEvent) {
+
+        Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
+
+        if (seleccionado != null) {
+            // Confirmar la eliminación (opcional)
+            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+            alerta.setTitle("Confirmar eliminación");
+            alerta.setHeaderText("¿Estás seguro de eliminar este cliente?");
+            alerta.setContentText("Cliente: " + seleccionado.getNombre());
+
+            Optional<ButtonType> resultado = alerta.showAndWait();
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+                // Eliminar del servicio
+                clienteService.eliminarCliente(seleccionado); // Asegúrate de tener este método
+
+                // Eliminar del TableView
+                tablaClientes.getItems().remove(seleccionado);
+                actualizarEtiquetaResultados();
+            }
+        } else {
+            // Mostrar alerta si no hay selección
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Ninguna selección");
+            alerta.setHeaderText("No se ha seleccionado ningún cliente");
+            alerta.setContentText("Por favor, selecciona un cliente para eliminar.");
+            alerta.showAndWait();
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
 
@@ -131,8 +217,12 @@ public class BuscarClienteController {
 
     }
 
+
+
     @FXML
     void editarCliente(ActionEvent event) {
+
+
 
     }
 
@@ -141,10 +231,11 @@ public class BuscarClienteController {
         txtBusqueda.clear();
         cmbCriterioBusqueda.getSelectionModel().selectFirst(); // Selecciona "Todos"
         tablaClientes.setItems(FXCollections.observableArrayList(clienteService.obtenerClientes()));
+        actualizarEtiquetaResultados();
 
     }
 
-
-    public void eliminar(ActionEvent actionEvent) {
+    @FXML
+    public void verVehiculos(ActionEvent event) {
     }
 }

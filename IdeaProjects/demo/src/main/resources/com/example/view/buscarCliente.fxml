@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.BuscarClienteController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.BuscarClienteController">
 
     <top>
         <VBox style="-fx-background-color: white; -fx-padding: 15px;">
@@ -109,8 +109,9 @@
 
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10px 20px; -fx-background-color: white; -fx-border-color: #e9ecef; -fx-border-width: 1 0 0 0;">
-              <Button onAction="#editarCliente" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand" text="Editar Cliente" />
+
               <Button onAction="#eliminar" style="-fx-background-color: #e74c3c; -fx-text-fill: white;-fx-cursor: hand" text="Eliminar Cliente" />
+         <Button fx:id="btnVehiculosCliente" onAction="#verVehiculos" style="-fx-background-color: #2ecc71; -fx-text-fill: white;-fx-cursor: hand" text="Ver vehículos cliente" />
             <Button onAction="#cerrarVista" style="-fx-background-color: #f39c12; -fx-text-fill: white;-fx-cursor: hand" text="Cerrar" />
         </HBox>
     </bottom>

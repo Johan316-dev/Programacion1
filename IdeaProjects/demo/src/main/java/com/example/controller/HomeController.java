@@ -200,6 +200,18 @@ public class HomeController {
     @FXML
     void mostrarRegistrarVehiculo(ActionEvent event) {
 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/registrarVehiculo.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            Stage stage = new Stage();
+            stage.setTitle("Registrar vehiculo");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML

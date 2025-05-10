@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.HomeController">
+<BorderPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.HomeController">
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 10px;">
@@ -58,15 +58,15 @@
             <!-- Gestión de Clientes -->
             <TitledPane expanded="false" style="-fx-text-fill: #0e598b;" text="Gestión de Clientes">
                 <VBox spacing="5">
-                    <Button fx:id="btnCrearCliente" maxWidth="Infinity" onAction="#mostrarAnadirCliente" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand;" text="Añadir Cliente" />
-                    <Button maxWidth="Infinity" onAction="#mostrarBuscarCliente" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Buscar Cliente" />
+                    <Button fx:id="btnCrearCliente" maxWidth="Infinity" onAction="#mostrarAnadirCliente" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand;-fx-border-color: #90bad9" text="Añadir Cliente" />
+                    <Button maxWidth="Infinity" onAction="#mostrarBuscarCliente" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9;" text="Buscar Cliente" />
                 </VBox>
             </TitledPane>
 
             <!-- Gestión de Vehículos -->
             <TitledPane expanded="false" style="-fx-text-fill: #0e598b;" text="Gestión de Vehículos">
                 <VBox spacing="5">
-                    <Button maxWidth="Infinity" onAction="#mostrarRegistrarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT;" text="Registrar Vehículo" />
+                    <Button maxWidth="Infinity" onAction="#mostrarRegistrarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Registrar Vehículo" />
                     <Button maxWidth="Infinity" onAction="#mostrarBuscarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT;" text="Buscar Vehículo" />
                     <Button maxWidth="Infinity" onAction="#mostrarActualizarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT;" text="Actualizar Vehículo" />
                 </VBox>

@@ -17,7 +17,9 @@ public class AdminService {
      * quemamos un administrador en el arraylist
      */
     public AdminService(){
+
         administradores.add(new Administrador("1089", "johan"));
+        administradores.add(new Administrador("1099", "jhojan"));
     }
 
     /**
