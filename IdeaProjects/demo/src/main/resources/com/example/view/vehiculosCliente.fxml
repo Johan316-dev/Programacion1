@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.VehiculoClienteController">
+
+    <top>
+        <VBox style="-fx-background-color: white; -fx-padding: 15px;">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Vehículos del Cliente" />
+            <Label fx:id="lblDescripcion" style="-fx-text-fill: #7f8c8d;" text="Vehículos asociados al cliente" />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20px;">
+            <!-- Información del cliente -->
+            <VBox style="-fx-background-color: white; -fx-padding: 15px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Datos del Cliente" />
+
+                <GridPane hgap="15" style="-fx-padding: 10px 0;" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="120" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="120" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                    </columnConstraints>
+
+                    <Label style="-fx-font-weight: bold;" text="Cédula:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label fx:id="lblCedula" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Nombre:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Label fx:id="lblNombre" text="-" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label fx:id="lblTelefono" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label style="-fx-font-weight: bold;" text="Correo:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <Label fx:id="lblCorreo" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button onAction="#editarCliente" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Editar Cliente" />
+                </HBox>
+            </VBox>
+
+            <!-- Lista de vehículos -->
+            <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Vehículos Registrados" />
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <TableView fx:id="tablaVehiculos" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colPlaca" prefWidth="100" text="Placa" />
+                        <TableColumn fx:id="colTipo" prefWidth="100" text="Tipo" />
+                        <TableColumn fx:id="colModelo" prefWidth="100" text="Modelo" />
+                        <TableColumn fx:id="colColor" prefWidth="100" text="Color" />
+                        <TableColumn fx:id="colEstadoMembresia" prefWidth="150" text="Estado Membresía" />
+                        <TableColumn fx:id="colVencimiento" prefWidth="120" text="Vencimiento" />
+                    </columns>
+                    <placeholder>
+                        <Label text="Este cliente no tiene vehículos registrados" />
+                    </placeholder>
+                </TableView>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button onAction="#editarVehiculo" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Editar Vehículo" />
+                    <Button onAction="#eliminarVehiculo" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Eliminar Vehículo" />
+                </HBox>
+            </VBox>
+
+            <!-- Panel de detalles del vehículo seleccionado -->
+            <VBox fx:id="panelDetallesVehiculo" managed="false" spacing="10" style="-fx-background-color: #f8f9fa; -fx-padding: 15px; -fx-background-radius: 5px; -fx-border-color: #e9ecef; -fx-border-width: 1px; -fx-border-radius: 5px;" visible="false">
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Detalles del Vehículo Seleccionado" />
+
+                <GridPane hgap="15" style="-fx-padding: 10px 0;" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="150" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="150" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                    </columnConstraints>
+
+                    <Label style="-fx-font-weight: bold;" text="Placa:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label fx:id="lblPlacaDetalle" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Tipo:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Label fx:id="lblTipoDetalle" text="-" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Modelo:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label fx:id="lblModeloDetalle" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label style="-fx-font-weight: bold;" text="Color:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <Label fx:id="lblColorDetalle" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                    <!-- Campos específicos según el tipo de vehículo -->
+                    <VBox fx:id="panelDetallesEspecificos" style="-fx-padding: 10px 0;" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="2">
+                        <Label style="-fx-font-weight: bold;" text="Características Específicas" />
+                        <Label fx:id="lblDetallesEspecificos" text="-" wrapText="true" />
+                    </VBox>
+
+                    <!-- Información de membresía -->
+                    <Label style="-fx-font-weight: bold;" text="Estado Membresía:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <Label fx:id="lblEstadoMembresiaDetalle" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                    <Label style="-fx-font-weight: bold;" text="Fecha Vencimiento:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Label fx:id="lblVencimientoDetalle" text="-" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button fx:id="btnGestionarMembresia" onAction="#gestionarMembresia" style="-fx-background-color: #9b59b6; -fx-text-fill: white;" text="Gestionar Membresía" />
+                    <Button onAction="#cerrarDetalles" style="-fx-background-color: #95a5a6; -fx-text-fill: white;" text="Cerrar Detalles" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10px 20px; -fx-background-color: white; -fx-border-color: #e9ecef; -fx-border-width: 1 0 0 0;">
+            <Button onAction="#verHistorialIngresos" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Historial de Ingresos" />
+            <Button onAction="#cerrarVista" style="-fx-background-color: #95a5a6; -fx-text-fill: white;" text="Cerrar" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

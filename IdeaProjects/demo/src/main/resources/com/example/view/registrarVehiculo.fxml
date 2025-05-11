@@ -33,10 +33,7 @@
 
                 <HBox spacing="10" alignment="CENTER_LEFT">
                     <ComboBox fx:id="cmbCliente" promptText="Seleccione un cliente" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                    <Button text="Buscar" onAction="#buscarCliente"
-                            style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
-                    <Button text="Nuevo Cliente" onAction="#nuevoCliente"
-                            style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+
                 </HBox>
 
                 <Label fx:id="lblClienteSeleccionado" text="No hay cliente seleccionado" style="-fx-text-fill: #7f8c8d;"/>
@@ -139,7 +136,7 @@
                     </columnConstraints>
 
                     <Label text="Cilindraje:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                    <TextField fx:id="txtCilindraje" promptText="Ingrese el cilindraje (cc)"
+                    <TextField fx:id="txtCilindraje" promptText="Ingrese el cilindraje (cc) solo numero"
                                GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
                     <Label text="Tipo de Moto:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
@@ -190,6 +187,7 @@
                 </GridPane>
             </VBox>
 
+
             <!-- Configuración de membresía -->
             <VBox spacing="10">
                 <Label text="Configuración de Membresía" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
@@ -236,9 +234,9 @@
         <!-- Botones de acción -->
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="Cancelar" onAction="#cancelarRegistro"
-                    style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-cursor: hand"/>
             <Button text="Registrar Vehículo" onAction="#registrarVehiculo"
-                    style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+                    style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-cursor: hand"/>
         </HBox>
     </VBox>
 </AnchorPane>

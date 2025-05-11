@@ -2,13 +2,11 @@ package com.example.model;
 
 public class Vehiculo {
     private String placa;
-    private String tipo;
     private String modelo;
     private String color;
 
-    public Vehiculo(String placa, String tipo, String modelo, String color) {
+    public Vehiculo(String placa,  String modelo, String color) {
         this.placa = placa;
-        this.tipo = tipo;
         this.modelo = modelo;
         this.color = color;
     }
@@ -21,13 +19,6 @@ public class Vehiculo {
         this.placa = placa;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
 
     public String getModelo() {
         return modelo;
@@ -43,5 +34,14 @@ public class Vehiculo {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" +
+                "placa='" + getPlaca() + '\'' +
+                ", modelo='" + getModelo() + '\'' +
+                ", color='" + getModelo() + '\'' +
+                '}';
     }
 }

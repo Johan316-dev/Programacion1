@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.model.Cliente;
+import com.example.model.HelloApplication;
 import com.example.service.ClienteService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -86,7 +87,10 @@ public class BuscarClienteController {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        colVehiculos.setCellValueFactory(cellData -> new SimpleStringProperty("0")); // Placeholder
+        colVehiculos.setCellValueFactory(cellData -> {
+            int cantidad = cellData.getValue().getVehiculos().size();
+            return new SimpleStringProperty(String.valueOf(cantidad));
+        });
 
         // Cargar datos
         tablaClientes.setItems(FXCollections.observableArrayList(clienteService.obtenerClientes()));
@@ -220,13 +224,6 @@ public class BuscarClienteController {
 
 
     @FXML
-    void editarCliente(ActionEvent event) {
-
-
-
-    }
-
-    @FXML
     void limpiarBusqueda(ActionEvent event) {
         txtBusqueda.clear();
         cmbCriterioBusqueda.getSelectionModel().selectFirst(); // Selecciona "Todos"
@@ -237,5 +234,33 @@ public class BuscarClienteController {
 
     @FXML
     public void verVehiculos(ActionEvent event) {
+
+        Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
+
+        if(seleccionado != null){
+
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/vehiculosCliente.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+                Stage stage = new Stage();
+                stage.setTitle("Detalle vehiculo");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }else{
+            // Mostrar alerta si no hay selección
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Ninguna selección");
+            alerta.setHeaderText("No se ha seleccionado ningún cliente");
+            alerta.setContentText("Por favor, selecciona un cliente.");
+            alerta.showAndWait();
+        }
+
+
     }
 }

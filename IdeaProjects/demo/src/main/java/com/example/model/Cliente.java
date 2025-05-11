@@ -3,6 +3,9 @@ package com.example.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente{
 
     private final StringProperty id = new SimpleStringProperty();
@@ -34,4 +37,25 @@ public class Cliente{
 
     public String getCorreo() { return correo.get(); }
     public void setCorreo(String value) { correo.set(value); }
+
+    @Override
+    public String toString() {
+        return nombre.get() + " (" + id.get() + ")";
+    }
+
+
+    //-------------------------- METODOS -------------------------//
+
+    private List<Vehiculo> vehiculos = new ArrayList<>();
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void agregarVehiculo(Vehiculo vehiculo) {
+        vehiculos.add(vehiculo);
+    }
+
+
+
 }

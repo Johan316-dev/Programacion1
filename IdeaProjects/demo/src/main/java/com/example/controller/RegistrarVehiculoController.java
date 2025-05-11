@@ -1,32 +1,42 @@
 package com.example.controller;
 
+import com.example.model.*;
+import com.example.service.ClienteService;
+import com.example.service.VehiculoService;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class RegistrarVehiculoController {
 
     @FXML
-    private ComboBox<?> cmbCliente;
+    private ComboBox<Cliente> cmbCliente;
 
     @FXML
-    private ComboBox<?> cmbCombustible;
+    private ComboBox<String> cmbCombustible;
 
     @FXML
     private ComboBox<?> cmbPeriodo;
 
     @FXML
-    private ComboBox<?> cmbTipoCamion;
+    private ComboBox<String> cmbTipoCamion;
 
     @FXML
-    private ComboBox<?> cmbTipoMoto;
+    private ComboBox<String> cmbTipoMoto;
 
     @FXML
-    private ComboBox<?> cmbTipoVehiculo;
+    private ComboBox<String> cmbTipoVehiculo;
 
     @FXML
-    private ComboBox<?> cmbTransmision;
+    private ComboBox<String> cmbTransmision;
 
     @FXML
     private DatePicker dpFechaInicio;
@@ -68,10 +78,10 @@ public class RegistrarVehiculoController {
     private RadioButton rbSinMembresia;
 
     @FXML
-    private Spinner<?> spNumEjes;
+    private Spinner<Integer> spNumEjes;
 
     @FXML
-    private Spinner<?> spNumPuertas;
+    private Spinner<Integer> spNumPuertas;
 
     @FXML
     private TextField txtCapacidadCarga;
@@ -94,9 +104,74 @@ public class RegistrarVehiculoController {
     @FXML
     private TextField txtPlaca;
 
+
     @FXML
     private ToggleGroup grupoMembresia;
 
+    ClienteService clienteService = ClienteService.getInstancia();
+    VehiculoService vehiculoService = VehiculoService.getInstancia();
+
+    @FXML
+    public void initialize() {
+
+        //RADIO BUTTOM
+
+        ToggleGroup grupoMembresia = new ToggleGroup();
+        rbSinMembresia.setToggleGroup(grupoMembresia);
+        rbConMembresia.setToggleGroup(grupoMembresia);
+
+        // Opcional: establecer uno seleccionado por defecto
+        rbSinMembresia.setSelected(true);
+
+        //----//
+
+        // Cargar clientes en el ComboBox
+        List<Cliente> listaClientes = clienteService.obtenerClientes();
+        cmbCliente.setItems(FXCollections.observableArrayList(listaClientes));
+
+        cmbCliente.setOnAction(e -> {
+            Cliente seleccionado = cmbCliente.getValue();
+            if (seleccionado != null) {
+                lblClienteSeleccionado.setText("Seleccionado: " + seleccionado.getNombre() + " (" + seleccionado.getId() + ")");
+            } else {
+                lblClienteSeleccionado.setText("No hay cliente seleccionado");
+            }
+        });
+
+        // Cargar tipos de vehículos
+        cmbTipoVehiculo.setItems(FXCollections.observableArrayList("Automóvil", "Moto", "Camión"));
+
+        //  Manejar selección del tipo de vehículo
+        cmbTipoVehiculo.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("Tipo seleccionado: " + newVal); // Debug
+            ocultarTodosLosPaneles();
+
+            if ("Automóvil".equals(newVal)) {
+                panelAutomovil.setVisible(true);
+                panelAutomovil.setManaged(true);
+            } else if ("Moto".equals(newVal)) {
+                panelMoto.setVisible(true);
+                panelMoto.setManaged(true);
+            } else if ("Camión".equals(newVal)) {
+                panelCamion.setVisible(true);
+                panelCamion.setManaged(true);
+            }
+        });
+
+        //  Ocultar paneles al iniciar
+        ocultarTodosLosPaneles();
+    }
+
+
+
+    private void ocultarTodosLosPaneles() {
+        panelAutomovil.setVisible(false);
+        panelAutomovil.setManaged(false);
+        panelMoto.setVisible(false);
+        panelMoto.setManaged(false);
+        panelCamion.setVisible(false);
+        panelCamion.setManaged(false);
+    }
 
     @FXML
     void buscarCliente(ActionEvent event) {
@@ -105,6 +180,11 @@ public class RegistrarVehiculoController {
 
     @FXML
     void cancelarRegistro(ActionEvent event) {
+
+        // Obtener el Stage (ventana) desde el botón o cualquier otro componente
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close(); // Cierra solo esta ventana
 
     }
 
@@ -116,6 +196,65 @@ public class RegistrarVehiculoController {
     @FXML
     void registrarVehiculo(ActionEvent event) {
 
+        String tipo = cmbTipoVehiculo.getValue();
+        String placa = txtPlaca.getText();
+        String modelo = txtModelo.getText();
+        String color = txtColor.getText();
+
+        Vehiculo vehiculo = null;
+
+        switch (tipo) {
+            case "Automóvil":
+                int puertas = spNumPuertas.getValue();
+                String transmision = cmbTransmision.getValue();
+                String combustible = cmbCombustible.getValue();
+                vehiculo = new Automovil(placa, color, modelo, puertas, transmision, combustible);
+                break;
+            case "Moto":
+                int cilindraje = Integer.parseInt(txtCilindraje.getText());
+                String tipoMoto = cmbTipoMoto.getValue();
+                vehiculo = new Moto(placa, color, modelo, cilindraje, tipoMoto);
+                break;
+            case "Camión":
+                int carga = Integer.parseInt(txtCapacidadCarga.getText());
+                int ejes = spNumEjes.getValue();
+                String tipoCamion = cmbTipoCamion.getValue();
+                vehiculo = new Camion(placa, modelo, color, carga, tipoCamion, ejes);
+                break;
+        }
+
+
+        Cliente clienteSeleccionado = cmbCliente.getValue();
+
+        if (clienteSeleccionado != null && vehiculo != null) {
+            VehiculoService vehiculoService = VehiculoService.getInstancia();
+            boolean registrado = vehiculoService.registrarVehiculo(vehiculo);
+
+            if (registrado) {
+                clienteSeleccionado.agregarVehiculo(vehiculo);
+                mostrarAlerta("Vehiculo registrado", "El vehiculo del cliente " + clienteSeleccionado.getNombre()
+                        + " se ha registrado correctamente");
+                System.out.println("Lista de vehiculos registrados: ");
+                for (Vehiculo v: vehiculoService.obtenerVehiculos()) {
+                    System.out.println("- " + v.getPlaca() + " | " + v.getModelo());
+                }
+            } else {
+                mostrarAlerta("Error","Ya existe un vehiculo con esa placa");
+            }
+        } else {
+            mostrarAlerta("Advertencia","Debe seleccionar un cliente y completar los datos del vehículo.");
+        }
+
     }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+
 
 }
