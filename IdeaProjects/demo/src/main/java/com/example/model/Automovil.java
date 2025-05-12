@@ -48,4 +48,8 @@ public class Automovil extends Vehiculo{
                 ", transmision='" + getTransmision() + '\'' +
                 '}';
     }
+
+    //---------------------------------------------------------//
+
+
 }

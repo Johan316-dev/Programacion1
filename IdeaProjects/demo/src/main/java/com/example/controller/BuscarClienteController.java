@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.model.Cliente;
 import com.example.model.HelloApplication;
 import com.example.service.ClienteService;
+import com.example.service.VehiculoService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -74,7 +75,12 @@ public class BuscarClienteController {
     @FXML
     private TextField txtBusqueda;
 
+    /**
+     * Singleton
+     */
     ClienteService clienteService = ClienteService.getInstancia();
+    VehiculoService vehiculoService = VehiculoService.getInstancia();
+    //---------------------------------------------//
     private Cliente clienteSeleccionado;
 
     @FXML
@@ -237,11 +243,24 @@ public class BuscarClienteController {
 
         Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
 
+        if (seleccionado == null) {
+            System.out.println("Error: No se ha seleccionado ningún cliente en la tabla.");
+            return;
+        }
+
+        System.out.println("Cliente seleccionado: " + seleccionado.getNombre());
+
         if(seleccionado != null){
 
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/vehiculosCliente.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+                VehiculoClienteController controller = fxmlLoader.getController();
+
+                controller.setCliente(seleccionado);
+                controller.cargarVehiculosCliente(clienteSeleccionado);
+
 
                 Stage stage = new Stage();
                 stage.setTitle("Detalle vehiculo");

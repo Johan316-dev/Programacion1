@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Date;
+import java.util.Calendar;
 
 public class RegistrarVehiculoController {
 
@@ -108,8 +110,12 @@ public class RegistrarVehiculoController {
     @FXML
     private ToggleGroup grupoMembresia;
 
+    /**
+     * Singleton
+     */
     ClienteService clienteService = ClienteService.getInstancia();
     VehiculoService vehiculoService = VehiculoService.getInstancia();
+    //---------------------------------------------//
 
     @FXML
     public void initialize() {
@@ -221,6 +227,24 @@ public class RegistrarVehiculoController {
                 String tipoCamion = cmbTipoCamion.getValue();
                 vehiculo = new Camion(placa, modelo, color, carga, tipoCamion, ejes);
                 break;
+        }
+
+        // Asociar membresía si se selecciona "Con Membresía"
+        if (rbConMembresia.isSelected() && vehiculo != null) {
+            Date fechaInicio = new Date(); // hoy
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fechaInicio);
+            calendar.add(Calendar.MONTH, 2); // duración 2 meses
+            Date fechaFin = calendar.getTime();
+
+            Membresia membresia = new Membresia();
+            membresia.setTipoMembresia("Estándar"); // puedes personalizar esto
+            membresia.setFechaInicio(fechaInicio);
+            membresia.setFechaFin(fechaFin);
+            membresia.setCosto(40.000); // puedes hacerlo dinámico
+            membresia.setEstado("Activa");
+
+            vehiculo.setMembresia(membresia);
         }
 
 

@@ -52,9 +52,7 @@
                </rowConstraints>
                 </GridPane>
 
-                <HBox alignment="CENTER_RIGHT" spacing="10">
-                    <Button onAction="#editarCliente" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Editar Cliente" />
-                </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="10" />
             </VBox>
 
             <!-- Lista de vehículos -->
@@ -79,8 +77,8 @@
                 </TableView>
 
                 <HBox alignment="CENTER_RIGHT" spacing="10">
-                    <Button onAction="#editarVehiculo" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Editar Vehículo" />
-                    <Button onAction="#eliminarVehiculo" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Eliminar Vehículo" />
+                    <Button onAction="#editarVehiculo" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-cursor: hand;" text="Editar Vehículo" />
+                    <Button onAction="#eliminarVehiculo" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-cursor: hand;" text="Eliminar Vehículo" />
                 </HBox>
             </VBox>
 
@@ -138,8 +136,8 @@
 
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10px 20px; -fx-background-color: white; -fx-border-color: #e9ecef; -fx-border-width: 1 0 0 0;">
-            <Button onAction="#verHistorialIngresos" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Historial de Ingresos" />
-            <Button onAction="#cerrarVista" style="-fx-background-color: #95a5a6; -fx-text-fill: white;" text="Cerrar" />
+            <Button onAction="#verHistorialIngresos" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand;" text="Historial de Ingresos" />
+            <Button onAction="#cerrarVista" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-cursor: hand;" text="Cerrar" />
         </HBox>
     </bottom>
 

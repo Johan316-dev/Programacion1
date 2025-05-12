@@ -48,13 +48,25 @@ public class Cliente{
 
     private List<Vehiculo> vehiculos = new ArrayList<>();
 
+    public Cliente() {
+        vehiculos = new ArrayList<>(); // Inicializa la lista
+    }
+
     public List<Vehiculo> getVehiculos() {
+
         return vehiculos;
     }
 
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
     public void agregarVehiculo(Vehiculo vehiculo) {
+
         vehiculos.add(vehiculo);
     }
+
+
 
 
 

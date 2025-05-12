@@ -16,6 +16,9 @@ public class Membresia {
         this.costo = costo;
         this.estado = estado;
     }
+    public Membresia() {
+    }
+
 
     public String getTipoMembresia() {
         return tipoMembresia;

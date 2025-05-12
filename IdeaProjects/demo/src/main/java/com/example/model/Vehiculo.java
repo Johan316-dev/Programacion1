@@ -44,4 +44,16 @@ public class Vehiculo {
                 ", color='" + getModelo() + '\'' +
                 '}';
     }
+
+    //-------------------------------------------------//
+
+    private Membresia membresia;
+
+    public Membresia getMembresia(){
+        return membresia;
+    }
+
+    public void setMembresia(Membresia membresia){
+        this.membresia = membresia;
+    }
 }
