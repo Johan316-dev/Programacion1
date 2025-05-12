@@ -45,9 +45,6 @@ public class Administrador {
 
     @Override
     public String toString() {
-        return "Administrador{" +
-                "id='" + id + '\'' +
-                ", nombre='" + nombre + '\'' +
-                '}';
+        return nombre;
     }
 }

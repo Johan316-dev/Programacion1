@@ -38,4 +38,18 @@ public class AdminService {
         }
         return false;
     }
+
+    public List<Administrador> obtenerAdmin(){
+        return administradores;
+    }
+
+    public Administrador obtenerAdministradorPorCredenciales(String cedula, String nombre) {
+        // Esto depende de cómo almacenes los administradores
+        for (Administrador admin : administradores) {
+            if (admin.getId().equals(cedula) && admin.getNombre().equals(nombre)) {
+                return admin;
+            }
+        }
+        return null;
+    }
 }

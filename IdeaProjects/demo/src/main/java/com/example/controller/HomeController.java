@@ -145,7 +145,20 @@ public class HomeController {
     @FXML
     void mostrarBuscarVehiculo(ActionEvent event) {
 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/buscarVehiculo.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            Stage stage = new Stage();
+            stage.setTitle("Buscar Vehiculo");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
 
     @FXML
     void mostrarConfigurarEspacios(ActionEvent event) {

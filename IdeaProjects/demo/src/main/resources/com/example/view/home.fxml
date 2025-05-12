@@ -67,8 +67,7 @@
             <TitledPane expanded="false" style="-fx-text-fill: #0e598b;" text="Gestión de Vehículos">
                 <VBox spacing="5">
                     <Button maxWidth="Infinity" onAction="#mostrarRegistrarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Registrar Vehículo" />
-                    <Button maxWidth="Infinity" onAction="#mostrarBuscarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT;" text="Buscar Vehículo" />
-                    <Button maxWidth="Infinity" onAction="#mostrarActualizarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT;" text="Actualizar Vehículo" />
+                    <Button maxWidth="Infinity" onAction="#mostrarBuscarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Buscar Vehículo" />
                 </VBox>
             </TitledPane>
 

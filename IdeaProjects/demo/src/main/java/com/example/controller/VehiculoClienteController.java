@@ -155,10 +155,7 @@ public class VehiculoClienteController {
 
 
     public void cargarVehiculosCliente(Cliente cliente) {
-        if (cliente == null) {
-            System.out.println("Error: El cliente proporcionado es nulo en cargarVehiculosCliente.");
-            return;
-        }
+
 
         System.out.println("Cargando vehículos para el cliente: " + cliente.getNombre());
 

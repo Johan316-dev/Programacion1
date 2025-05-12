@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.model.Administrador;
 import com.example.model.HelloApplication;
 import com.example.service.AdminService;
 import javafx.event.ActionEvent;
@@ -7,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -40,6 +38,15 @@ public class AdminController {
     @FXML
     private Text errorText; // Texto para mostrar errores
 
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
     @FXML
     void Login(ActionEvent event) {
         String id = cedulaField.getText().trim();
@@ -47,6 +54,16 @@ public class AdminController {
 
         if (adminService.validarLogin(id, nombre)) {
             System.out.println("Login exitoso");
+            // Obtener el administrador específico que inició sesión
+            Administrador adminLogueado = adminService.obtenerAdministradorPorCredenciales(id, nombre);
+
+            if (adminLogueado != null) {
+                System.out.println("Login exitoso");
+                mostrarAlerta("¡Bienvenido!", "Bienvenido " + adminLogueado.getNombre());
+            } else {
+                errorText.setText("Administrador no encontrado");
+            }
+
 
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/home.fxml"));
@@ -68,7 +85,6 @@ public class AdminController {
                 newStage.show();
 
 
-
                 Stage currentStage = (Stage) loginButton.getScene().getWindow();
                 currentStage.close();
             } catch (IOException e) {
@@ -81,9 +97,10 @@ public class AdminController {
             errorText.setStyle("-fx-fill: red;");
         }
     }
-
-
 }
+
+
+
 
 
 

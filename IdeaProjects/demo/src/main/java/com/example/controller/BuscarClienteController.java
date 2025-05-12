@@ -243,10 +243,6 @@ public class BuscarClienteController {
 
         Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
 
-        if (seleccionado == null) {
-            System.out.println("Error: No se ha seleccionado ningún cliente en la tabla.");
-            return;
-        }
 
         System.out.println("Cliente seleccionado: " + seleccionado.getNombre());
 
