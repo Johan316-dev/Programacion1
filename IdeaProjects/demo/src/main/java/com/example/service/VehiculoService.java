@@ -35,7 +35,12 @@ public class VehiculoService {
     }
 
     public List<Vehiculo> obtenerVehiculos(){
+
         return listaVehiculos;
+    }
+
+    public void eliminarVehiculo(Vehiculo vehiculo){
+        listaVehiculos.remove(vehiculo);
     }
 
 

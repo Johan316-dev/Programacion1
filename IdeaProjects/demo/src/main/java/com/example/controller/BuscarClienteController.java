@@ -243,10 +243,8 @@ public class BuscarClienteController {
 
         Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
 
-
-        System.out.println("Cliente seleccionado: " + seleccionado.getNombre());
-
         if(seleccionado != null){
+            System.out.println("Cliente seleccionado: " + seleccionado.getNombre());
 
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/vehiculosCliente.fxml"));
@@ -255,7 +253,7 @@ public class BuscarClienteController {
                 VehiculoClienteController controller = fxmlLoader.getController();
 
                 controller.setCliente(seleccionado);
-                controller.cargarVehiculosCliente(clienteSeleccionado);
+                controller.cargarVehiculosCliente(seleccionado);
 
 
                 Stage stage = new Stage();
@@ -275,7 +273,6 @@ public class BuscarClienteController {
             alerta.setContentText("Por favor, selecciona un cliente.");
             alerta.showAndWait();
         }
-
 
     }
 }

@@ -233,7 +233,7 @@
 
         <!-- Botones de acción -->
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="Cancelar" onAction="#cancelarRegistro"
+            <Button text="Cerrar" onAction="#cancelarRegistro"
                     style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-cursor: hand"/>
             <Button text="Registrar Vehículo" onAction="#registrarVehiculo"
                     style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-cursor: hand"/>

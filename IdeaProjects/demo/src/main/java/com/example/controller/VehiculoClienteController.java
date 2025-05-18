@@ -156,7 +156,6 @@ public class VehiculoClienteController {
 
     public void cargarVehiculosCliente(Cliente cliente) {
 
-
         System.out.println("Cargando vehículos para el cliente: " + cliente.getNombre());
 
         List<Vehiculo> vehiculos = cliente.getVehiculos();

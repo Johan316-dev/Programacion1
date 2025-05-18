@@ -48,10 +48,21 @@ public class Vehiculo {
     //-------------------------------------------------//
 
     private Membresia membresia;
+    private Cliente cliente;
 
     public Membresia getMembresia(){
+
         return membresia;
     }
+
+    public Cliente getCliente(){
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
 
     public void setMembresia(Membresia membresia){
         this.membresia = membresia;

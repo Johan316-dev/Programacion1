@@ -256,6 +256,7 @@ public class RegistrarVehiculoController {
 
             if (registrado) {
                 clienteSeleccionado.agregarVehiculo(vehiculo);
+                vehiculo.setCliente(clienteSeleccionado);
                 mostrarAlerta("Vehiculo registrado", "El vehiculo del cliente " + clienteSeleccionado.getNombre()
                         + " se ha registrado correctamente");
                 System.out.println("Lista de vehiculos registrados: ");
