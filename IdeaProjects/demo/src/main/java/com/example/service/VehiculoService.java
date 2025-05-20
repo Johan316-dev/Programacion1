@@ -11,12 +11,12 @@ public class VehiculoService {
     public static VehiculoService instancia;
     private final List<Vehiculo> listaVehiculos = new ArrayList<>();
 
-    private VehiculoService(){
+    private VehiculoService() {
 
     }
 
-    public static VehiculoService getInstancia(){
-        if (instancia == null){
+    public static VehiculoService getInstancia() {
+        if (instancia == null) {
             instancia = new VehiculoService();
         }
         return instancia;
@@ -34,13 +34,56 @@ public class VehiculoService {
         return true;
     }
 
-    public List<Vehiculo> obtenerVehiculos(){
+    public List<Vehiculo> obtenerVehiculos() {
 
         return listaVehiculos;
     }
 
-    public void eliminarVehiculo(Vehiculo vehiculo){
+    public void eliminarVehiculo(Vehiculo vehiculo) {
+
         listaVehiculos.remove(vehiculo);
+    }
+
+    public boolean existeVehiculoConPlaca(String placa) {
+        return listaVehiculos.stream().anyMatch(v -> v.getPlaca().equalsIgnoreCase(placa));
+    }
+
+    public boolean actualizarVehiculo(Vehiculo vehiculo, String placaAnterior) {
+
+        // Verifica que no exista otro cliente con la nueva cédula
+        for (Vehiculo v : listaVehiculos) {
+            if (!v.getPlaca().equals(placaAnterior) && v.getPlaca().equalsIgnoreCase(vehiculo.getPlaca())) {
+                return false; // Ya existe otro con esa placa
+            }
+        }
+
+        // Buscar el cliente original y actualizar sus datos
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            if (listaVehiculos.get(i).getPlaca().equals(placaAnterior)) {
+                listaVehiculos.set(i, vehiculo);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // En VehiculoService
+    private final List<ChangeListener> listeners = new ArrayList<>();
+
+    public void addChangeListener(ChangeListener listener) {
+        listeners.add(listener);
+    }
+
+    public void notifyChange() {
+        for (ChangeListener listener : listeners) {
+            listener.onChange();
+        }
+    }
+
+    // Interface
+    public interface ChangeListener {
+        void onChange();
     }
 
 

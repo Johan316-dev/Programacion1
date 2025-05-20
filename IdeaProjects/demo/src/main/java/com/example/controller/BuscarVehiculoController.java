@@ -6,8 +6,10 @@ import com.example.model.Membresia;
 import com.example.model.Vehiculo;
 import com.example.service.ClienteService;
 import com.example.service.VehiculoService;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -110,10 +113,19 @@ public class BuscarVehiculoController {
 
     @FXML
     public void initialize() {
-        VehiculoService vehiculoService = VehiculoService.getInstancia();
+        vehiculoService = VehiculoService.getInstancia(); // Usa el global
 
-        List<Vehiculo> vehiculos = vehiculoService.obtenerVehiculos();
-        tablaVehiculos.setItems(FXCollections.observableArrayList(vehiculos));
+        // Usa una sola ObservableList que mantendremos actualizada
+        ObservableList<Vehiculo> vehiculosObservable = FXCollections.observableArrayList(vehiculoService.obtenerVehiculos());
+        tablaVehiculos.setItems(vehiculosObservable);
+
+        // Configura el listener para actualizar la misma lista observable
+        vehiculoService.addChangeListener(() -> {
+            Platform.runLater(() -> {
+                vehiculosObservable.setAll(vehiculoService.obtenerVehiculos());
+                actualizarEtiquetaResultados();
+            });
+        });
 
         colPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
         colModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
@@ -143,7 +155,9 @@ public class BuscarVehiculoController {
             return new SimpleStringProperty("-");
         });
 
-        lblResultados.setText(vehiculos.size() + " vehículos encontrados");
+        lblResultados.setText(vehiculosObservable.size() + " vehículos encontrados");
+        // Actualizar etiqueta inicial
+        actualizarEtiquetaResultados();
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -222,16 +236,27 @@ public class BuscarVehiculoController {
         if(vehiculoSeleccionado != null){
 
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/actualizarVehiculo.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/actualizarVehiculo.fxml"));
+                DialogPane dialogPane = loader.load();
 
-                ActualizarVehiculoController controller = fxmlLoader.getController();
+                ActualizarVehiculoController controller = loader.getController();
                 controller.setVehiculo(vehiculoSeleccionado);
+                controller.setOnCloseCallback(() -> {
+                    if (controller.isVehiculoActualizado()) {
+                        System.out.println("Vehiculo actualizado y se refrescó");
+                        tablaVehiculos.getItems().setAll(vehiculoService.obtenerVehiculos());
+                        tablaVehiculos.refresh();
+                        actualizarEtiquetaResultados();
+                    }
+                });
 
-                Stage stage = new Stage();
-                stage.setTitle("Actualizar Vehiculo");
-                stage.setScene(scene);
-                stage.show();
+                Dialog<Void> dialog = new Dialog<>();
+                dialog.setDialogPane(dialogPane);
+                dialog.setTitle("Actualizar Vehículo");
+                dialog.initModality(Modality.APPLICATION_MODAL); // bloquea ventana principal
+                dialog.showAndWait();
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
