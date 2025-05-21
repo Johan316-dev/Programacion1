@@ -1,18 +1,20 @@
 package com.example.controller;
 
-import com.example.model.Automovil;
-import com.example.model.Camion;
-import com.example.model.Moto;
-import com.example.model.Vehiculo;
+import com.example.model.*;
 import com.example.service.ClienteService;
 import com.example.service.VehiculoService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -169,10 +171,11 @@ public class ActualizarVehiculoController {
             // Guardar placa original
             String placaAnterior = vehiculo.getPlaca();
 
-            // Actualizar campos comunes
-            vehiculo.setPlaca(nuevaPlaca);
-            vehiculo.setModelo(nuevoModelo);
-            vehiculo.setColor(nuevoColor);
+            // ⚠️ Crear copia temporal del vehículo con los cambios
+            Vehiculo copia = copiarVehiculo(vehiculo);
+            copia.setPlaca(nuevaPlaca);
+            copia.setModelo(nuevoModelo);
+            copia.setColor(nuevoColor);
 
             // Actualizar campos específicos
             if (vehiculo instanceof Automovil automovil) {
@@ -200,7 +203,7 @@ public class ActualizarVehiculoController {
             }
 
             // Intentar actualizar usando el servicio
-            boolean actualizado = vehiculoService.actualizarVehiculo(vehiculo, placaAnterior);
+            boolean actualizado = vehiculoService.actualizarVehiculo(copia, placaAnterior);
             if (!actualizado) {
                 lblErrorPlaca.setText("Ya existe otro vehículo con esa placa");
                 lblErrorPlaca.setVisible(true);
@@ -223,6 +226,27 @@ public class ActualizarVehiculoController {
             mostrarPanelPorTipo(newVal);
         });
     }
+
+    private Vehiculo copiarVehiculo(Vehiculo original) {
+        Vehiculo copia = null;
+
+        if (original instanceof Automovil a) {
+            copia = new Automovil(a.getPlaca(), a.getModelo(), a.getColor(), a.getNumPuertas(), a.getCombustible(), a.getTransmision());
+        } else if (original instanceof Moto m) {
+            copia = new Moto(m.getPlaca(), m.getModelo(), m.getColor(), m.getCilindraje(), m.getTipoMoto());
+        } else if (original instanceof Camion c) {
+            copia = new Camion(c.getPlaca(), c.getModelo(), c.getColor(), c.getCapacidadCarga(), c.getTipoCamion(), c.getNumEjes());
+        }
+
+        if (copia != null) {
+            copia.setCliente(original.getCliente());
+            copia.setMembresia(original.getMembresia());
+        }
+
+        return copia;
+    }
+
+
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -249,7 +273,6 @@ public class ActualizarVehiculoController {
                 break;
         }
     }
-
 
 
     public void setVehiculo(Vehiculo vehiculo) {
@@ -279,7 +302,6 @@ public class ActualizarVehiculoController {
             txtEstadoMembresia.setDisable(true);
             txtFechaVencimiento.setDisable(true);
             cmbTipoVehiculo.setDisable(true);
-            txtPlaca.setDisable(true);
 
             // Establecer el tipo en el ComboBox
             String tipoVehiculo = vehiculo.getClass().getSimpleName();
@@ -303,10 +325,56 @@ public class ActualizarVehiculoController {
     @FXML
     void cambiarCliente(ActionEvent event) {
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/view/seleccionarCliente.fxml"));
+            Parent root = loader.load();
+
+            SeleccionarClienteController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Seleccionar Cliente");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            Cliente nuevoCliente = controller.getClienteSeleccionado();
+            if (nuevoCliente != null) {
+
+                Cliente clienteAnterior = vehiculo.getCliente();
+
+                //Eliminar del cliente anterior
+                if (clienteAnterior != null) {
+                    clienteAnterior.getVehiculos().remove(vehiculo);
+                }
+
+                //Asignar al nuevo cliente
+                vehiculo.setCliente(nuevoCliente);
+                nuevoCliente.getVehiculos().add(vehiculo);
+
+                //Actualizar UI
+                txtCliente.setText(nuevoCliente.getNombre());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
     void gestionarMembresia(ActionEvent event) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/gestionarMembresia.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            Stage stage = new Stage();
+            stage.setTitle("Gestionar Membresia");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

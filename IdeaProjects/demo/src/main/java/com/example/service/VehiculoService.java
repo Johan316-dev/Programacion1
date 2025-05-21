@@ -48,19 +48,21 @@ public class VehiculoService {
         return listaVehiculos.stream().anyMatch(v -> v.getPlaca().equalsIgnoreCase(placa));
     }
 
-    public boolean actualizarVehiculo(Vehiculo vehiculo, String placaAnterior) {
+    public boolean actualizarVehiculo(Vehiculo vehiculoActualizado, String placaAnterior) {
+
+        List<Vehiculo> vehiculos = this.listaVehiculos;
 
         // Verifica que no exista otro cliente con la nueva cédula
-        for (Vehiculo v : listaVehiculos) {
-            if (!v.getPlaca().equals(placaAnterior) && v.getPlaca().equalsIgnoreCase(vehiculo.getPlaca())) {
+        for (Vehiculo v : vehiculos) {
+            if (!v.getPlaca().equals(placaAnterior) && v.getPlaca().equalsIgnoreCase(vehiculoActualizado.getPlaca())) {
                 return false; // Ya existe otro con esa placa
             }
         }
 
         // Buscar el cliente original y actualizar sus datos
-        for (int i = 0; i < listaVehiculos.size(); i++) {
-            if (listaVehiculos.get(i).getPlaca().equals(placaAnterior)) {
-                listaVehiculos.set(i, vehiculo);
+        for (int i = 0; i < vehiculos.size(); i++) {
+            if (vehiculos.get(i).getPlaca().equals(placaAnterior)) {
+                vehiculos.set(i, vehiculoActualizado);
                 return true;
             }
         }

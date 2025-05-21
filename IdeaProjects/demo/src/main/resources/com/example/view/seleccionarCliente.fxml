@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.controller.SeleccionarClienteController"
+            prefWidth="500.0"
+            prefHeight="400.0"
+            style="-fx-background-color: #f5f5f5;">
+
+    <top>
+        <VBox style="-fx-background-color: white; -fx-padding: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 3);">
+            <Label text="Seleccionar Cliente" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15px;">
+            <TableView fx:id="tablaClientes" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="250"/>
+                    <TableColumn fx:id="colDocumento" text="Documento" prefWidth="150"/>
+                </columns>
+                <placeholder>
+                    <Label text="No hay clientes disponibles" />
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 0 15px 15px 15px;">
+            <Button text="Cancelar" onAction= "#cerrarVista"
+                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-cursor: hand"/>
+            <Button text="Seleccionar" onAction="#seleccionarCliente"
+                    style="-fx-background-color: #2ecc71 ; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

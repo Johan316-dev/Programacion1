@@ -68,7 +68,7 @@
                         <Label text="Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                         <HBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="4">
                             <TextField fx:id="txtCliente" editable="false" HBox.hgrow="ALWAYS" />
-                            <Button onAction="#cambiarCliente" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Cambiar" />
+                            <Button onAction="#cambiarCliente" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand" text="Cambiar" />
                         </HBox>
                <rowConstraints>
                   <RowConstraints />
@@ -214,7 +214,7 @@
                     </GridPane>
 
                     <HBox alignment="CENTER_RIGHT" spacing="10">
-                        <Button fx:id="btnGestionarMembresia" onAction="#gestionarMembresia" style="-fx-background-color: #9b59b6; -fx-text-fill: white;" text="Gestionar Membresía" />
+                        <Button fx:id="btnGestionarMembresia" onAction="#gestionarMembresia" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-cursor: hand" text="Gestionar Membresía" />
                     </HBox>
                 </VBox>
 

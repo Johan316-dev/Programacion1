@@ -214,12 +214,12 @@ public class RegistrarVehiculoController {
                 int puertas = spNumPuertas.getValue();
                 String transmision = cmbTransmision.getValue();
                 String combustible = cmbCombustible.getValue();
-                vehiculo = new Automovil(placa, color, modelo, puertas, transmision, combustible);
+                vehiculo = new Automovil(placa, modelo, color, puertas, transmision, combustible);
                 break;
             case "Moto":
                 int cilindraje = Integer.parseInt(txtCilindraje.getText());
                 String tipoMoto = cmbTipoMoto.getValue();
-                vehiculo = new Moto(placa, color, modelo, cilindraje, tipoMoto);
+                vehiculo = new Moto(placa, modelo, color, cilindraje, tipoMoto);
                 break;
             case "Camión":
                 int carga = Integer.parseInt(txtCapacidadCarga.getText());
