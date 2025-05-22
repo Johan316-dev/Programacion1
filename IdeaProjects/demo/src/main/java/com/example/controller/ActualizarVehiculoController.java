@@ -368,6 +368,10 @@ public class ActualizarVehiculoController {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/gestionarMembresia.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
 
+            GestionarMembresiaController controller = fxmlLoader.getController();
+            controller.setVehiculo(vehiculo);
+            controller.cargarDatosMembresia(vehiculo);
+
             Stage stage = new Stage();
             stage.setTitle("Gestionar Membresia");
             stage.setScene(scene);

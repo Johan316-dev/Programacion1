@@ -1,6 +1,8 @@
 package com.example.service;
 
+import com.example.model.Automovil;
 import com.example.model.Cliente;
+import com.example.model.Moto;
 import com.example.model.Vehiculo;
 
 import java.util.ArrayList;
@@ -11,7 +13,13 @@ public class VehiculoService {
     public static VehiculoService instancia;
     private final List<Vehiculo> listaVehiculos = new ArrayList<>();
 
+    private Vehiculo vehiculoSeleccionado;
+
     private VehiculoService() {
+
+        listaVehiculos.add(new Moto("XAM43D", "2016", "NEGRO", 150, "Naked"));
+        listaVehiculos.add(new Automovil("FOR548", "2022", "ROJO", 4, "Diesel", "Manual"));
+
 
     }
 
@@ -20,6 +28,16 @@ public class VehiculoService {
             instancia = new VehiculoService();
         }
         return instancia;
+    }
+
+    // Establecer el vehículo actualmente seleccionado (por ejemplo, desde la UI)
+    public void setVehiculoSeleccionado(Vehiculo vehiculo) {
+        this.vehiculoSeleccionado = vehiculo;
+    }
+
+    // ✅ Obtener el vehículo actualmente seleccionado
+    public Vehiculo getVehiculoSeleccionado() {
+        return vehiculoSeleccionado;
     }
 
     //------------------------------- CRUDS -----------------------------//

@@ -11,6 +11,9 @@ public class ClienteService {
 
     private ClienteService() {
 
+        clientes.add(new Cliente("1001", "Johan", "123456789", "johan@gmail.com"));
+        clientes.add(new Cliente("1002", "Jose", "987654321", "jose@gmail.com"));
+
     }
 
     public static ClienteService getInstancia() {

@@ -1,10 +1,22 @@
 package com.example.controller;
 
+import com.example.model.Cliente;
+import com.example.model.Membresia;
+import com.example.model.Vehiculo;
+import com.example.service.ClienteService;
+import com.example.service.VehiculoService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import java.time.ZoneId;
+import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class GestionarMembresiaController {
 
@@ -107,33 +119,257 @@ public class GestionarMembresiaController {
     @FXML
     private ToggleGroup grupoPlanes;
 
+    /**
+     * Singleton
+     */
+    ClienteService clienteService = ClienteService.getInstancia();
+    VehiculoService vehiculoService = VehiculoService.getInstancia();
+    //---------------------------------------------//
+
+    private Vehiculo vehiculoSeleccionado; // asignado al iniciar la vista
+
+
+    private final int PRECIO_1_MES = 100_000;
+    private final int PRECIO_3_MESES = 300_000;
+    private final int PRECIO_1_ANIO = 1_200_000;
+    private final int DESCUENTO_3_MESES = 15_000;
+    private final int DESCUENTO_1_ANIO = 180_000;
+
+
+    @FXML
+    public void initialize() {
+
+        ToggleGroup grupoPlanes = new ToggleGroup();
+
+        rbPlan1Mes.setToggleGroup(grupoPlanes);
+        rbPlan1Anio.setToggleGroup(grupoPlanes);
+        rbPlan3Meses.setToggleGroup(grupoPlanes);
+
+        rbPlan1Mes.setSelected(true);
+
+        ToggleGroup grupoMetodoPago = new ToggleGroup();
+
+        rbEfectivo.setToggleGroup(grupoMetodoPago);
+        rbTarjeta.setToggleGroup(grupoMetodoPago);
+        rbTransferencia.setToggleGroup(grupoMetodoPago);
+
+        rbEfectivo.setSelected(true);
+
+
+        // Configurar evento para cambiar resumen al cambiar fecha
+        dpFechaInicio.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (rbPlan1Mes.isSelected()) {
+                seleccionarPlan1Mes();
+            } else if (rbPlan3Meses.isSelected()) {
+                seleccionarPlan3Meses();
+            } else if (rbPlan1Anio.isSelected()) {
+                seleccionarPlan1Anio();
+            }
+        });
+
+        seleccionarPlan1Mes(); // Selección por defecto
+
+
+        txtReferenciaPago.textProperty().addListener((obs, oldVal, newVal) -> {
+            lblMensajeError.setVisible(false);
+        });
+    }
+
+    private void actualizarResumenPlan(String nombrePlan, int mesesDuracion, int precioBase, int descuento) {
+        lblPlanSeleccionado.setText(nombrePlan);
+
+        LocalDate fechaInicio = dpFechaInicio.getValue();
+        if (fechaInicio == null) {
+            fechaInicio = LocalDate.now();
+            dpFechaInicio.setValue(fechaInicio);
+        }
+
+        LocalDate fechaFin = fechaInicio.plusMonths(mesesDuracion);
+        lblFechaFin.setText(fechaFin.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+        lblPrecioBase.setText(String.format("%,d", precioBase));
+        lblDescuento.setText(String.format("%,d (%.0f%%)", descuento, (double) descuento / precioBase * 100));
+        lblTotalPagar.setText(String.format("%,d", precioBase - descuento));
+    }
+
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        Cliente cliente = vehiculo.getCliente();
+        if (cliente != null) {
+            lblNombreCliente.setText(cliente.getNombre());
+            lblCedulaCliente.setText(cliente.getId());
+            lblTelefonoCliente.setText(cliente.getTelefono());
+            lblCorreoCliente.setText(cliente.getCorreo());
+        }
+
+        lblPlaca.setText(vehiculo.getPlaca());
+        lblTipo.setText(vehiculo.getClass().getSimpleName()); // Automovil, Moto, etc.
+        lblModelo.setText(vehiculo.getModelo());
+        lblColor.setText(vehiculo.getColor());
+    }
+
+    public void cargarDatosMembresia(Vehiculo vehiculo) {
+        if (vehiculo.getMembresia() != null &&
+                "Activa".equalsIgnoreCase(vehiculo.getMembresia().getEstado())) {
+
+            lblEstadoMembresia.setText("Membresía activa");
+            lblEstadoMembresia.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
+
+        } else {
+            lblEstadoMembresia.setText("Sin membresía activa");
+            lblEstadoMembresia.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
+        }
+    }
+
+
+
     @FXML
     void cancelarOperacion(ActionEvent event) {
 
+        // Obtener el Stage (ventana) desde el botón o cualquier otro componente
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close(); // Cierra solo esta ventana
+
     }
+
+    private void mostrarError(String mensaje) {
+        lblMensajeError.setText(mensaje);
+        lblMensajeError.setVisible(true);
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        lblMensajeError.setText(mensaje);
+        lblMensajeError.setStyle("-fx-text-fill: green; -fx-font-size: 12px;");
+        lblMensajeError.setVisible(true);
+    }
+
 
     @FXML
     void confirmarPago(ActionEvent event) {
 
+        lblMensajeError.setVisible(false);
+
+        String metodoPago;
+        if (rbEfectivo.isSelected()) {
+            metodoPago = "Efectivo";
+        } else if (rbTarjeta.isSelected()) {
+            metodoPago = "Tarjeta";
+        } else if (rbTransferencia.isSelected()) {
+            metodoPago = "Transferencia";
+        } else {
+            metodoPago = "";
+        }
+
+        String referencia = txtReferenciaPago.getText().trim();
+        String observaciones = txtObservaciones.getText().trim();
+        LocalDate fechaInicio = dpFechaInicio.getValue();
+
+        if (fechaInicio == null || metodoPago.isEmpty()) {
+            mostrarError("Debe seleccionar una fecha de inicio y un método de pago.");
+            return;
+        }
+
+        if (!metodoPago.equals("Efectivo") && referencia.isEmpty()) {
+            mostrarError("Debe ingresar una referencia de pago para tarjeta o transferencia.");
+            return;
+        }
+
+
+        // Obtener plan seleccionado
+        String plan = lblPlanSeleccionado.getText();
+        String fechaFin = lblFechaFin.getText();
+        String precioBase = lblPrecioBase.getText();
+        String descuento = lblDescuento.getText();
+        String total = lblTotalPagar.getText();
+
+        //CREAR MEMBRESIA
+        String tipoPlan = lblPlanSeleccionado.getText();
+        Double costoTotal = Double.parseDouble(lblTotalPagar.getText().replace("$", "").replace(",", ""));
+        LocalDate fechaFinLocal = LocalDate.parse(lblFechaFin.getText());
+        String estado = "Activa";
+
+        // Convertir LocalDate a Date
+        Date fechaInicioDate = Date.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date fechaFinDate = Date.from(fechaFinLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        // Crear la membresía
+        Membresia membresia = new Membresia(tipoPlan, fechaInicioDate, fechaFinDate, costoTotal, estado);
+
+        // Asociar al vehículo actual
+        Vehiculo vehiculoSeleccionado = vehiculoService.getVehiculoSeleccionado();
+        if (vehiculoSeleccionado != null) {
+            vehiculoSeleccionado.setMembresia(membresia);
+        }
+
+        // Actualizar vista de membresía
+        //actualizarVistaMembresia(membresia);
+
+        // Aquí puedes guardar los datos en el sistema, base de datos, etc.
+        System.out.println("---- DATOS DE PAGO ----");
+        System.out.println("Plan: " + plan);
+        System.out.println("Inicio: " + fechaInicio);
+        System.out.println("Fin: " + fechaFin);
+        System.out.println("Método de Pago: " + metodoPago);
+        System.out.println("Referencia: " + referencia);
+        System.out.println("Observaciones: " + observaciones);
+        System.out.println("Precio Base: " + precioBase);
+        System.out.println("Descuento: " + descuento);
+        System.out.println("Total: " + total);
+
+        lblEstadoMembresia.setText("Membresía activa");
+        lblEstadoMembresia.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
+
+        mostrarMensaje("Pago registrado con éxito. Puede generar la factura.");
+
     }
+/**
+    private void actualizarVistaMembresia(Membresia membresia) {
+        if (membresia != null) {
+            txtEstadoMembresia.setText(membresia.getEstado());
+            txtFechaVencimiento.setText(
+                    new SimpleDateFormat("yyyy-MM-dd").format(membresia.getFechaFin())
+            );
+            lblEstadoMembresia.setText("Membresía activa");
+            lblEstadoMembresia.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
+        } else {
+            txtEstadoMembresia.setText("Sin membresía");
+            txtFechaVencimiento.setText("-");
+            lblEstadoMembresia.setText("Sin membresía");
+            lblEstadoMembresia.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
+        }
+    }**/
+
 
     @FXML
     void generarFactura(ActionEvent event) {
 
-    }
-
-    @FXML
-    void seleccionarPlan1Anio(MouseEvent event) {
+        // Este método puede crear un archivo PDF, mostrar un resumen, etc.
+        mostrarMensaje("Factura generada exitosamente.");
 
     }
 
     @FXML
-    void seleccionarPlan1Mes(MouseEvent event) {
+    void seleccionarPlan1Anio() {
+
+        rbPlan1Anio.setSelected(true);
+        actualizarResumenPlan("Plan Premium (1 año)", 12, PRECIO_1_ANIO, DESCUENTO_1_ANIO);
 
     }
 
     @FXML
-    void seleccionarPlan3Meses(MouseEvent event) {
+    void seleccionarPlan1Mes() {
+
+        rbPlan1Mes.setSelected(true);
+        actualizarResumenPlan("Plan Basico (1 Mes)", 1, PRECIO_1_MES, 0);
+
+    }
+
+    @FXML
+    void seleccionarPlan3Meses() {
+
+        rbPlan3Meses.setSelected(true);
+        actualizarResumenPlan("Plan Estandar (3 Meses)", 3, PRECIO_3_MESES, DESCUENTO_3_MESES);
 
     }
 

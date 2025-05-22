@@ -65,6 +65,7 @@ public class Vehiculo {
 
 
     public void setMembresia(Membresia membresia){
+
         this.membresia = membresia;
     }
 }
