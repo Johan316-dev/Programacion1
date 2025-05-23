@@ -111,6 +111,12 @@ public class BuscarVehiculoController {
     VehiculoService vehiculoService = VehiculoService.getInstancia();
     //---------------------------------------------//
 
+    private BuscarClienteController buscarClienteController;
+
+    public void setBuscarClienteController(BuscarClienteController controller) {
+        this.buscarClienteController = controller;
+    }
+
     @FXML
     public void initialize() {
         vehiculoService = VehiculoService.getInstancia(); // Usa el global
@@ -241,6 +247,10 @@ public class BuscarVehiculoController {
 
                 ActualizarVehiculoController controller = loader.getController();
                 controller.setVehiculo(vehiculoSeleccionado);
+                controller.setBuscarClienteController(buscarClienteController);
+
+
+
                 controller.setOnCloseCallback(() -> {
                     if (controller.isVehiculoActualizado()) {
                         System.out.println("Vehiculo actualizado y se refrescó");

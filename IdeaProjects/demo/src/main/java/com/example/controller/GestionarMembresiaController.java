@@ -127,6 +127,9 @@ public class GestionarMembresiaController {
     //---------------------------------------------//
 
     private Vehiculo vehiculoSeleccionado; // asignado al iniciar la vista
+    private ActualizarVehiculoController actualizarVehiculoController;
+
+
 
 
     private final int PRECIO_1_MES = 100_000;
@@ -134,6 +137,10 @@ public class GestionarMembresiaController {
     private final int PRECIO_1_ANIO = 1_200_000;
     private final int DESCUENTO_3_MESES = 15_000;
     private final int DESCUENTO_1_ANIO = 180_000;
+
+    public void setActualizarVehiculoController(ActualizarVehiculoController controller) {
+        this.actualizarVehiculoController = controller;
+    }
 
 
     @FXML
@@ -194,6 +201,9 @@ public class GestionarMembresiaController {
 
 
     public void setVehiculo(Vehiculo vehiculo) {
+
+        this.vehiculoSeleccionado = vehiculo;
+
         Cliente cliente = vehiculo.getCliente();
         if (cliente != null) {
             lblNombreCliente.setText(cliente.getNombre());
@@ -282,11 +292,16 @@ public class GestionarMembresiaController {
         String precioBase = lblPrecioBase.getText();
         String descuento = lblDescuento.getText();
         String total = lblTotalPagar.getText();
+        System.out.println("Texto en lblTotalPagar: " + lblTotalPagar.getText());
+
 
         //CREAR MEMBRESIA
         String tipoPlan = lblPlanSeleccionado.getText();
-        Double costoTotal = Double.parseDouble(lblTotalPagar.getText().replace("$", "").replace(",", ""));
-        LocalDate fechaFinLocal = LocalDate.parse(lblFechaFin.getText());
+        Double costoTotal = Double.parseDouble(lblTotalPagar.getText().replace(".", ""));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaFinLocal = LocalDate.parse(lblFechaFin.getText(), formatter);
+
         String estado = "Activa";
 
         // Convertir LocalDate a Date
@@ -297,13 +312,19 @@ public class GestionarMembresiaController {
         Membresia membresia = new Membresia(tipoPlan, fechaInicioDate, fechaFinDate, costoTotal, estado);
 
         // Asociar al vehículo actual
-        Vehiculo vehiculoSeleccionado = vehiculoService.getVehiculoSeleccionado();
         if (vehiculoSeleccionado != null) {
             vehiculoSeleccionado.setMembresia(membresia);
+        } else {
+            mostrarError("Error interno: vehículo no asignado.");
+            return;
         }
 
-        // Actualizar vista de membresía
-        //actualizarVistaMembresia(membresia);
+
+        // 👉 Actualiza la vista si hay referencia disponible
+        if (actualizarVehiculoController != null) {
+            actualizarVehiculoController.actualizarVistaMembresia(membresia);
+        }
+
 
         // Aquí puedes guardar los datos en el sistema, base de datos, etc.
         System.out.println("---- DATOS DE PAGO ----");
@@ -320,25 +341,12 @@ public class GestionarMembresiaController {
         lblEstadoMembresia.setText("Membresía activa");
         lblEstadoMembresia.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
 
+
         mostrarMensaje("Pago registrado con éxito. Puede generar la factura.");
 
     }
-/**
-    private void actualizarVistaMembresia(Membresia membresia) {
-        if (membresia != null) {
-            txtEstadoMembresia.setText(membresia.getEstado());
-            txtFechaVencimiento.setText(
-                    new SimpleDateFormat("yyyy-MM-dd").format(membresia.getFechaFin())
-            );
-            lblEstadoMembresia.setText("Membresía activa");
-            lblEstadoMembresia.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
-        } else {
-            txtEstadoMembresia.setText("Sin membresía");
-            txtFechaVencimiento.setText("-");
-            lblEstadoMembresia.setText("Sin membresía");
-            lblEstadoMembresia.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 5px 10px; -fx-background-radius: 3px;");
-        }
-    }**/
+
+
 
 
     @FXML

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.DatosParqueaderoController">
+
+    <top>
+        <VBox style="-fx-background-color: white; -fx-padding: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 3);">
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Configuración del Parqueadero" />
+            <Label style="-fx-text-fill: #7f8c8d;" text="Defina la información del parqueadero que aparecerá en facturas y documentos oficiales" />
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="20" style="-fx-padding: 20px;">
+                <!-- Información básica -->
+                <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Información Básica Parqueadero" />
+
+                    <GridPane hgap="15" style="-fx-padding: 15px 0;" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        </columnConstraints>
+
+                        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNombre" promptText="Nombre del parqueadero" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="NIT/RUT:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNit" promptText="Identificación fiscal" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                        <Label text="Dirección:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtDireccion" promptText="Dirección completa" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+
+                        <Label text="Ciudad:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtCiudad" promptText="Ciudad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Departamento:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtDepartamento" promptText="Departamento/Estado" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+                    </GridPane>
+                </VBox>
+
+                <!-- Representante legal y contacto -->
+                <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Representante Legal y Contacto" />
+
+                    <GridPane hgap="15" style="-fx-padding: 15px 0;" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        </columnConstraints>
+
+                        <Label text="Representante:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtRepresentante" promptText="Nombre del representante legal" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+
+                        <Label text="Cédula:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCedulaRepresentante" promptText="Cédula del representante" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Cargo:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCargoRepresentante" promptText="Cargo del representante" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                        <Label text="Teléfono Principal:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtTelefonoPrincipal" promptText="Teléfono principal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Correo Electrónico:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtCorreo" promptText="Correo electrónico" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+                    </GridPane>
+                </VBox>
+
+
+                <!-- Logo e imagen -->
+                <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Logo e Imagen" />
+
+                    <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 15px 0;">
+                        <VBox alignment="CENTER" spacing="10">
+                            <ImageView fx:id="imgLogo" fitHeight="150" fitWidth="150" preserveRatio="true">
+                                <Image url="@../../../images/3f11d6d9db8d42f9db42e68a24e545ca.jpg" />
+                            </ImageView>
+                            <Button onAction="#cambiarLogo" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand" text="Cambiar Logo" />
+                        </VBox>
+
+                        <VBox spacing="10">
+                            <Label style="-fx-font-weight: bold;" text="Recomendaciones:" />
+                            <Label text="• Tamaño recomendado: 300x300 píxeles" wrapText="true" />
+                            <Label text="• Formatos soportados: PNG, JPG" wrapText="true" />
+                            <Label text="• Preferiblemente con fondo transparente (PNG)" wrapText="true" />
+                            <Label text="• El logo aparecerá en facturas y documentos oficiales" wrapText="true" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 15px; -fx-background-color: white; -fx-border-color: #e9ecef; -fx-border-width: 1 0 0 0;">
+            <Label fx:id="lblUltimaActualizacion" style="-fx-text-fill: #7f8c8d;" text="Última actualización: 01/01/2025 10:30 AM" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#cancelarCambios" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-cursor: hand" text="Cerrar" />
+            <Button onAction="#vistaPrevia" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-cursor: hand" text="Vista Previa Factura" />
+            <Button onAction="#guardarCambios" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand" text="Guardar Cambios" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

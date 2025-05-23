@@ -83,6 +83,11 @@ public class BuscarClienteController {
     //---------------------------------------------//
     private Cliente clienteSeleccionado;
 
+    public void refrescarTablaClientes() {
+        tablaClientes.refresh();
+    }
+
+
     @FXML
     public void initialize() {
 

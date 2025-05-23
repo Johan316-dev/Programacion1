@@ -234,14 +234,14 @@ public class RegistrarVehiculoController {
             Date fechaInicio = new Date(); // hoy
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(fechaInicio);
-            calendar.add(Calendar.MONTH, 2); // duración 2 meses
+            calendar.add(Calendar.WEEK_OF_MONTH, 1); // duración 1 semana
             Date fechaFin = calendar.getTime();
 
             Membresia membresia = new Membresia();
             membresia.setTipoMembresia("Estándar"); // puedes personalizar esto
             membresia.setFechaInicio(fechaInicio);
             membresia.setFechaFin(fechaFin);
-            membresia.setCosto(40.000); // puedes hacerlo dinámico
+            membresia.setCosto(0.0); // puedes hacerlo dinámico
             membresia.setEstado("Activa");
 
             vehiculo.setMembresia(membresia);

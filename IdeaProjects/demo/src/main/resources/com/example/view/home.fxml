@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.HomeController">
+<BorderPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.HomeController">
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 10px;">
@@ -74,7 +74,7 @@
             <!-- Administración y Tarifas -->
             <TitledPane expanded="false" style="-fx-text-fill: #0e598b;" text="Administración y Tarifas">
                 <VBox spacing="5">
-                    <Button maxWidth="Infinity" onAction="#mostrarDatosParqueadero" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Datos del Parqueadero" />
+                    <Button maxWidth="Infinity" onAction="#mostrarDatosParqueadero" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Datos del Parqueadero" />
                     <Button maxWidth="Infinity" onAction="#mostrarConfigurarEspacios" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Configurar Espacios" />
                     <Button maxWidth="Infinity" onAction="#mostrarConfigurarTarifas" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Configurar Tarifas" />
                     <Button maxWidth="Infinity" onAction="#mostrarHistorialPagos" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Historial de Pagos" />
@@ -107,11 +107,11 @@
         <StackPane>
             <!-- Panel de bienvenida -->
             <VBox fx:id="panelBienvenida" alignment="CENTER" spacing="20" style="-fx-padding: 20px;">
-                <ImageView fitHeight="200" fitWidth="200" preserveRatio="true">
+                <ImageView fx:id="imgHome" fitHeight="200" fitWidth="200" preserveRatio="true">
                     <Image url="@../../../images/3f11d6d9db8d42f9db42e68a24e545ca.jpg" />
                 </ImageView>
 
-                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Bienvenido al Sistema de Gestión de Parqueadero" />
+                <Label fx:id="lblTitulo" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Bienvenido al Sistema de Gestión de Parqueadero" />
 
                 <Label style="-fx-font-size: 16px;" text="Seleccione una opción del menú para comenzar" />
 

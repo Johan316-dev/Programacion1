@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.model.HelloApplication;
+import com.example.model.Parqueadero;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -11,11 +12,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -65,6 +71,9 @@ public class HomeController {
     private Label statusLabel;
 
     @FXML
+    private ImageView imgHome;
+
+    @FXML
     private TableView<?> tablaMembresiasPorVencer;
 
     @FXML
@@ -82,6 +91,20 @@ public class HomeController {
             e.printStackTrace();
         }
     }
+
+    public void actualizarDatosParqueadero() {
+        Parqueadero datos = Parqueadero.getInstance();
+
+        nombreParqueaderoLabel.setText(datos.getNombre());
+
+        if (datos.getRutaLogo() != null) {
+            File logoFile = new File(datos.getRutaLogo());
+            if (logoFile.exists()) {
+                imgHome.setImage(new Image(logoFile.toURI().toString()));
+            }
+        }
+    }
+
 
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a");
@@ -172,6 +195,21 @@ public class HomeController {
 
     @FXML
     void mostrarDatosParqueadero(ActionEvent event) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/datosParqueadero.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            DatosParqueaderoController controller = fxmlLoader.getController();
+            controller.setHomeController(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("Datos Parqueadero");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
