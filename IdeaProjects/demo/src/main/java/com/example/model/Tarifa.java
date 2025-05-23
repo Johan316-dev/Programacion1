@@ -1,48 +1,80 @@
 package com.example.model;
 
 public class Tarifa {
-    private String tipoVehiculo;
-    private Double precioHora;
-    private Double precioDia;
-    private Double precioMembresia;
 
-    public Tarifa(String tipoVehiculo, Double precioHora, Double precioDia, Double precioMembresia) {
-        this.tipoVehiculo = tipoVehiculo;
-        this.precioHora = precioHora;
-        this.precioDia = precioDia;
-        this.precioMembresia = precioMembresia;
+    private int tarifaHoraMoto;
+    private int tarifaHoraAuto;
+    private int tarifaHoraCamion;
+
+    private int tarifaDiaMoto;
+    private int tarifaDiaAuto;
+    private int tarifaDiaCamion;
+
+    private int horasParaDia;
+
+    public Tarifa(int tarifaHoraMoto, int tarifaHoraAuto, int tarifaHoraCamion, int tarifaDiaMoto, int tarifaDiaAuto, int tarifaDiaCamion, int horasParaDia) {
+        this.tarifaHoraMoto = tarifaHoraMoto;
+        this.tarifaHoraAuto = tarifaHoraAuto;
+        this.tarifaHoraCamion = tarifaHoraCamion;
+        this.tarifaDiaMoto = tarifaDiaMoto;
+        this.tarifaDiaAuto = tarifaDiaAuto;
+        this.tarifaDiaCamion = tarifaDiaCamion;
+        this.horasParaDia = horasParaDia;
     }
 
-
-    public String getTipoVehiculo() {
-        return tipoVehiculo;
+    public int getTarifaHoraMoto() {
+        return tarifaHoraMoto;
     }
 
-    public void setTipoVehiculo(String tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
+    public void setTarifaHoraMoto(int tarifaHoraMoto) {
+        this.tarifaHoraMoto = tarifaHoraMoto;
     }
 
-    public Double getPrecioHora() {
-        return precioHora;
+    public int getTarifaHoraAuto() {
+        return tarifaHoraAuto;
     }
 
-    public void setPrecioHora(Double precioHora) {
-        this.precioHora = precioHora;
+    public void setTarifaHoraAuto(int tarifaHoraAuto) {
+        this.tarifaHoraAuto = tarifaHoraAuto;
     }
 
-    public Double getPrecioDia() {
-        return precioDia;
+    public int getTarifaHoraCamion() {
+        return tarifaHoraCamion;
     }
 
-    public void setPrecioDia(Double precioDia) {
-        this.precioDia = precioDia;
+    public void setTarifaHoraCamion(int tarifaHoraCamion) {
+        this.tarifaHoraCamion = tarifaHoraCamion;
     }
 
-    public Double getPrecioMembresia() {
-        return precioMembresia;
+    public int getTarifaDiaMoto() {
+        return tarifaDiaMoto;
     }
 
-    public void setPrecioMembresia(Double precioMembresia) {
-        this.precioMembresia = precioMembresia;
+    public void setTarifaDiaMoto(int tarifaDiaMoto) {
+        this.tarifaDiaMoto = tarifaDiaMoto;
+    }
+
+    public int getTarifaDiaAuto() {
+        return tarifaDiaAuto;
+    }
+
+    public void setTarifaDiaAuto(int tarifaDiaAuto) {
+        this.tarifaDiaAuto = tarifaDiaAuto;
+    }
+
+    public int getTarifaDiaCamion() {
+        return tarifaDiaCamion;
+    }
+
+    public void setTarifaDiaCamion(int tarifaDiaCamion) {
+        this.tarifaDiaCamion = tarifaDiaCamion;
+    }
+
+    public int getHorasParaDia() {
+        return horasParaDia;
+    }
+
+    public void setHorasParaDia(int horasParaDia) {
+        this.horasParaDia = horasParaDia;
     }
 }

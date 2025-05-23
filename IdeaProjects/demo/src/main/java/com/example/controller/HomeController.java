@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.example.model.ConfiguracionParqueadero;
+import com.example.model.Cupo;
 import com.example.model.HelloApplication;
 import com.example.model.Parqueadero;
 import javafx.animation.KeyFrame;
@@ -77,6 +79,11 @@ public class HomeController {
     private TableView<?> tablaMembresiasPorVencer;
 
     @FXML
+    public void initialize() {
+        actualizarTarjetasCupos();
+    }
+
+    @FXML
     void cerrarSesion(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/login.fxml"));
@@ -119,16 +126,6 @@ public class HomeController {
     }
 
 
-
-    @FXML
-    void mostrarActualizarCliente(ActionEvent event) {
-
-    }
-
-    @FXML
-    void mostrarActualizarVehiculo(ActionEvent event) {
-
-    }
 
     @FXML
     void mostrarAnadirCliente(ActionEvent event) {
@@ -186,7 +183,37 @@ public class HomeController {
     @FXML
     void mostrarConfigurarEspacios(ActionEvent event) {
 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/CuposTarifa.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            Stage stage = new Stage();
+            stage.setTitle("Cupos y Tarifas");
+            stage.setMaximized(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    private void actualizarTarjetasCupos() {
+        Cupo cupo = ConfiguracionParqueadero.getInstancia().getCupo();
+
+        espaciosMotosLabel.setText(
+                cupo.getOcupadoMoto() + "/" + cupo.getMoto()
+        );
+
+        espaciosAutomovilesLabel.setText(
+                cupo.getOcupadoAutomovil() + "/" + cupo.getAutomovil()
+        );
+
+        espaciosCamionesLabel.setText(
+                cupo.getOcupadoCamion() + "/" + cupo.getCamion()
+        );
+    }
+
 
     @FXML
     void mostrarConfigurarTarifas(ActionEvent event) {
