@@ -267,6 +267,7 @@ public class VehiculosActivosController {
             alerta.setContentText("Por favor, selecciona un vehiculo.");
             alerta.showAndWait();
 
+
         }
 
     }
