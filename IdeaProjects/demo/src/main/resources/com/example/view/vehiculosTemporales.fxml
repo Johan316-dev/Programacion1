@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.controller.VehiculosTemporalesController"
+            prefWidth="900.0"
+            prefHeight="700.0"
+            style="-fx-background-color: #f5f5f5;">
+
+    <top>
+        <VBox style="-fx-background-color: white; -fx-padding: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 3);">
+            <Label text="Control de Vehículos Temporales" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label text="Registre el ingreso y salida de vehículos por horas" style="-fx-text-fill: #7f8c8d;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" style="-fx-padding: 10px;">
+            <Tab text="Registrar Ingreso">
+                <VBox spacing="20" style="-fx-padding: 20px;">
+                    <!-- Formulario de ingreso -->
+                    <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                        <Label text="Nuevo Ingreso" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                        <GridPane hgap="15" vgap="15" style="-fx-padding: 15px 0;">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                            </columnConstraints>
+
+                            <Label text="Placa del Vehículo:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                            <TextField fx:id="txtPlacaIngreso" promptText="Ej: ABC123" style="-fx-font-size: 14px; -fx-font-weight: bold;"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                            <Label text="Tipo de Vehículo:" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                            <ComboBox fx:id="cmbTipoVehiculo" promptText="Seleccione tipo" GridPane.rowIndex="0" GridPane.columnIndex="3" maxWidth="Infinity">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Moto" />
+                                        <String fx:value="Automóvil" />
+                                        <String fx:value="Camión" />
+                                    </FXCollections>
+                                </items>
+                            </ComboBox>
+
+                            <Label text="Puesto Asignado:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                            <ComboBox fx:id="cmbPuestoAsignado" promptText="Seleccione puesto" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity" />
+
+                            <Label text="Fecha y Hora de Ingreso:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                            <Label fx:id="lblFechaHoraIngreso" text="01/01/2025 - 10:30 AM" style="-fx-font-weight: bold;"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="3" />
+
+                            <Label text="Observaciones:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                            <TextField fx:id="txtObservacionesIngreso" promptText="Observaciones adicionales (opcional)"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+                        </GridPane>
+
+                        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 10px 0 0 0;">
+                            <Button text="Limpiar" onAction="#limpiarFormularioIngreso"
+                                    style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+                            <Button text="Registrar Ingreso" onAction="#registrarIngreso"
+                                    style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Información de puestos disponibles -->
+                    <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                        <Label text="Estado de Puestos" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                        <HBox spacing="30" alignment="CENTER_LEFT" style="-fx-padding: 15px 0;">
+                            <VBox alignment="CENTER" spacing="5">
+                                <Label text="Motos" style="-fx-font-weight: bold;"/>
+                                <Label fx:id="lblDisponiblesMotos" text="15/20" style="-fx-font-size: 18px;"/>
+                                <Label text="Disponibles" style="-fx-text-fill: #7f8c8d;"/>
+                            </VBox>
+
+                            <VBox alignment="CENTER" spacing="5">
+                                <Label text="Automóviles" style="-fx-font-weight: bold;"/>
+                                <Label fx:id="lblDisponiblesAutomoviles" text="35/50" style="-fx-font-size: 18px;"/>
+                                <Label text="Disponibles" style="-fx-text-fill: #7f8c8d;"/>
+                            </VBox>
+
+                            <VBox alignment="CENTER" spacing="5">
+                                <Label text="Camiones" style="-fx-font-weight: bold;"/>
+                                <Label fx:id="lblDisponiblesCamiones" text="8/10" style="-fx-font-size: 18px;"/>
+                                <Label text="Disponibles" style="-fx-text-fill: #7f8c8d;"/>
+                            </VBox>
+
+                            <Separator orientation="VERTICAL" />
+
+                            <VBox alignment="CENTER" spacing="5">
+                                <Label text="Total Ocupados" style="-fx-font-weight: bold;"/>
+                                <Label fx:id="lblTotalOcupados" text="22/80" style="-fx-font-size: 18px; -fx-text-fill: #e74c3c;"/>
+                                <Label text="Puestos" style="-fx-text-fill: #7f8c8d;"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </Tab>
+
+            <Tab text="Registrar Salida">
+                <VBox spacing="20" style="-fx-padding: 20px;">
+                    <!-- Búsqueda de vehículo -->
+                    <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                        <Label text="Buscar Vehículo para Salida" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-padding: 15px 0;">
+                            <Label text="Buscar por:" />
+                            <RadioButton fx:id="rbBuscarPorPlaca" text="Placa" toggleGroup="$grupoBusqueda" selected="true"/>
+                            <RadioButton fx:id="rbBuscarPorTicket" text="Número de Ticket" toggleGroup="$grupoBusqueda"/>
+
+                            <TextField fx:id="txtBusquedaSalida" promptText="Ingrese placa o número de ticket" prefWidth="200"/>
+                            <Button text="Buscar" onAction="#buscarVehiculo"
+                                    style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Información del vehículo encontrado -->
+                    <VBox fx:id="panelInformacionVehiculo" style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);" visible="false">
+                        <Label text="Información del Vehículo" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                        <GridPane hgap="15" vgap="15" style="-fx-padding: 15px 0;">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="120" prefWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                            </columnConstraints>
+
+                            <Label text="Número de Ticket:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                            <Label fx:id="lblNumeroTicket" text="-" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                            <Label text="Placa:" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                            <Label fx:id="lblPlacaSalida" text="-" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="3" />
+
+                            <Label text="Tipo de Vehículo:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                            <Label fx:id="lblTipoVehiculoSalida" text="-" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                            <Label text="Puesto:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                            <Label fx:id="lblPuestoSalida" text="-" GridPane.rowIndex="1" GridPane.columnIndex="3" />
+
+                            <Label text="Fecha y Hora de Ingreso:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                            <Label fx:id="lblFechaHoraIngresoSalida" text="-" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                            <Label text="Fecha y Hora de Salida:" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+                            <Label fx:id="lblFechaHoraSalida" text="01/01/2025 - 02:30 PM" style="-fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnIndex="3" />
+                        </GridPane>
+
+                        <Separator style="-fx-padding: 10px 0;"/>
+
+                        <!-- Cálculo de tiempo y tarifa -->
+                        <VBox spacing="10">
+                            <Label text="Cálculo de Tarifa" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+                            <GridPane hgap="15" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="150" prefWidth="200" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="100" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="150" prefWidth="200" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="100" />
+                                </columnConstraints>
+
+                                <Label text="Tiempo de Permanencia:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <Label fx:id="lblTiempoPermanencia" text="4 horas 15 minutos" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label text="Tarifa por Hora:" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                <Label fx:id="lblTarifaPorHora" text="4,000" GridPane.rowIndex="0" GridPane.columnIndex="3" />
+
+                                <Label text="Subtotal:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <Label fx:id="lblSubtotal" text="20,000" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                <Label text="Descuentos/Recargos:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                                <Label fx:id="lblDescuentosRecargos" text="0" GridPane.rowIndex="1" GridPane.columnIndex="3" />
+
+                                <Label text="Total a Pagar:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                                <Label fx:id="lblTotalPagar" text="20,000" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #e74c3c;"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                            </GridPane>
+                        </VBox>
+
+                        <Separator style="-fx-padding: 10px 0;"/>
+
+                        <!-- Método de pago -->
+                        <VBox spacing="10">
+                            <Label text="Método de Pago" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+                            <HBox spacing="20" alignment="CENTER_LEFT">
+                                <RadioButton fx:id="rbEfectivo" text="Efectivo" toggleGroup="$grupoMetodoPago" selected="true"/>
+                                <RadioButton fx:id="rbTarjeta" text="Tarjeta" toggleGroup="$grupoMetodoPago"/>
+                                <RadioButton fx:id="rbTransferencia" text="Transferencia" toggleGroup="$grupoMetodoPago"/>
+                            </HBox>
+
+                            <HBox spacing="15" alignment="CENTER_LEFT">
+                                <Label text="Monto Recibido:" />
+                                <TextField fx:id="txtMontoRecibido" promptText="0" prefWidth="100"/>
+                                <Label text="Cambio:" />
+                                <Label fx:id="lblCambio" text="0" style="-fx-font-weight: bold;"/>
+                            </HBox>
+                        </VBox>
+
+                        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 15px 0 0 0;">
+                            <Button text="Cancelar" onAction="#cancelarSalida"
+                                    style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+                            <Button text="Imprimir Ticket" onAction="#imprimirTicket"
+                                    style="-fx-background-color: #f39c12; -fx-text-fill: white;"/>
+                            <Button text="Registrar Salida" onAction="#registrarSalida"
+                                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </Tab>
+
+            <Tab text="Vehículos Activos">
+                <VBox spacing="20" style="-fx-padding: 20px;">
+                    <!-- Filtros y búsqueda -->
+                    <VBox style="-fx-background-color: white; -fx-padding: 15px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="Filtrar por:" />
+                            <ComboBox fx:id="cmbFiltroTipo" promptText="Tipo de vehículo">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Todos" />
+                                        <String fx:value="Moto" />
+                                        <String fx:value="Automóvil" />
+                                        <String fx:value="Camión" />
+                                    </FXCollections>
+                                </items>
+                                <value>
+                                    <String fx:value="Todos" />
+                                </value>
+                            </ComboBox>
+
+                            <TextField fx:id="txtFiltroPlaca" promptText="Buscar por placa..." />
+                            <Button text="Filtrar" onAction="#filtrarVehiculos"
+                                    style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                            <Button text="Actualizar" onAction="#actualizarListaVehiculos"
+                                    style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Lista de vehículos activos -->
+                    <VBox style="-fx-background-color: white; -fx-padding: 15px; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);">
+                        <Label text="Vehículos Actualmente en el Parqueadero" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                        <TableView fx:id="tablaVehiculosActivos" style="-fx-padding: 10px 0;" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colTicket" text="Ticket" prefWidth="80"/>
+                                <TableColumn fx:id="colPlacaActivos" text="Placa" prefWidth="100"/>
+                                <TableColumn fx:id="colTipoActivos" text="Tipo" prefWidth="100"/>
+                                <TableColumn fx:id="colPuestoActivos" text="Puesto" prefWidth="80"/>
+                                <TableColumn fx:id="colFechaIngreso" text="Fecha Ingreso" prefWidth="120"/>
+                                <TableColumn fx:id="colHoraIngreso" text="Hora Ingreso" prefWidth="100"/>
+                                <TableColumn fx:id="colTiempoTranscurrido" text="Tiempo" prefWidth="100"/>
+                                <TableColumn fx:id="colTarifaActual" text="Tarifa Actual" prefWidth="100"/>
+                                <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="120"/>
+                            </columns>
+                        </TableView>
+
+                        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10px 0 0 0;">
+                            <Label fx:id="lblTotalVehiculosActivos" text="Total de vehículos: 22" style="-fx-font-weight: bold;"/>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button text="Procesar Salida Seleccionado" onAction="#procesarSalidaSeleccionado"
+                                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 15px; -fx-background-color: white; -fx-border-color: #e9ecef; -fx-border-width: 1 0 0 0;">
+            <Label text="Estado del Sistema:" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblEstadoSistema" text="Operativo" style="-fx-text-fill: #2ecc71;"/>
+
+            <Separator orientation="VERTICAL" />
+
+            <Label text="Último Ingreso:" />
+            <Label fx:id="lblUltimoIngreso" text="ABC123 - 02:15 PM" />
+
+            <Separator orientation="VERTICAL" />
+
+            <Label text="Última Salida:" />
+            <Label fx:id="lblUltimaSalida" text="XYZ789 - 02:10 PM" />
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Label fx:id="lblFechaHoraActual" text="01/01/2025 - 02:30 PM" style="-fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

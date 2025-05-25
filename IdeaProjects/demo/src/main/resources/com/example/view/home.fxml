@@ -68,6 +68,7 @@
                 <VBox spacing="5">
                     <Button maxWidth="Infinity" onAction="#mostrarRegistrarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Registrar Vehículo" />
                     <Button maxWidth="Infinity" onAction="#mostrarBuscarVehiculo" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Buscar Vehículo" />
+                    <Button maxWidth="Infinity" onAction="#mostrarVehiculosActivos" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Vehiculos Activos" />
                 </VBox>
             </TitledPane>
 
@@ -83,10 +84,9 @@
             <!-- Registro de Ingresos y Pagos -->
             <TitledPane expanded="false" style="-fx-text-fill: #0e598b;" text="Ingresos y Pagos">
                 <VBox spacing="5">
-                    <Button maxWidth="Infinity" onAction="#mostrarRegistrarIngreso" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Registrar Ingreso" />
-                    <Button maxWidth="Infinity" onAction="#mostrarRegistrarSalida" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Registrar Salida" />
+                    <Button maxWidth="Infinity" onAction="#mostrarRegistrarIngreso" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Registrar Ingreso" />
+                    <Button maxWidth="Infinity" onAction="#mostrarRegistrarSalida" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Registrar Salida" />
                     <Button maxWidth="Infinity" onAction="#mostrarGenerarFactura" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Generar Factura" />
-                    <Button maxWidth="Infinity" onAction="#mostrarRegistrarMembresia" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Registrar Membresía" />
                 </VBox>
             </TitledPane>
 
@@ -135,8 +135,8 @@
                 </HBox>
 
                 <HBox alignment="CENTER" spacing="15">
-                    <Button onAction="#mostrarRegistrarIngreso" prefHeight="40" prefWidth="150" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Registrar Ingreso" />
-                    <Button onAction="#mostrarRegistrarSalida" prefHeight="40" prefWidth="150" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Registrar Salida" />
+                    <Button onAction="#mostrarRegistrarIngreso" prefHeight="40" prefWidth="150" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand;" text="Registrar Ingreso" />
+                    <Button onAction="#mostrarRegistrarSalida" prefHeight="40" prefWidth="150" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-cursor: hand" text="Registrar Salida" />
                     <Button onAction="#mostrarAnadirCliente" prefHeight="40" prefWidth="150" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-cursor: hand" text="Añadir Cliente" />
                 </HBox>
 

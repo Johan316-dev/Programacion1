@@ -70,7 +70,7 @@ public class VehiculoService {
 
         List<Vehiculo> vehiculos = this.listaVehiculos;
 
-        // Verifica que no exista otro cliente con la nueva cédula
+        // Verifica que no exista un vehiculo con esa placa
         for (Vehiculo v : vehiculos) {
             if (!v.getPlaca().equals(placaAnterior) && v.getPlaca().equalsIgnoreCase(vehiculoActualizado.getPlaca())) {
                 return false; // Ya existe otro con esa placa

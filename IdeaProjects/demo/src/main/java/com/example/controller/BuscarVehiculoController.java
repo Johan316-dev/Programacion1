@@ -250,12 +250,12 @@ public class BuscarVehiculoController {
                 controller.setBuscarClienteController(buscarClienteController);
 
 
-
                 controller.setOnCloseCallback(() -> {
                     if (controller.isVehiculoActualizado()) {
                         System.out.println("Vehiculo actualizado y se refrescó");
                         tablaVehiculos.getItems().setAll(vehiculoService.obtenerVehiculos());
                         tablaVehiculos.refresh();
+                        tablaVehiculos.setItems(FXCollections.observableArrayList(vehiculoService.obtenerVehiculos()));
                         actualizarEtiquetaResultados();
                     }
                 });
@@ -305,6 +305,7 @@ public class BuscarVehiculoController {
 
                 // Eliminar del TableView
                 tablaVehiculos.getItems().remove(vehiculoSeleccionado);
+                tablaVehiculos.setItems(FXCollections.observableArrayList(vehiculoService.obtenerVehiculos()));
                 actualizarEtiquetaResultados();
             }
         }else {

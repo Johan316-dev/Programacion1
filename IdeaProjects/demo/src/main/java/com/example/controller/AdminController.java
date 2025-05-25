@@ -70,7 +70,6 @@ public class AdminController {
                 Scene scene = new Scene(fxmlLoader.load());
 
                 HomeController homeController = fxmlLoader.getController();
-
                 homeController.iniciarReloj();
 
                 Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

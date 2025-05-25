@@ -80,6 +80,12 @@ public class HomeController {
 
     @FXML
     public void initialize() {
+
+        ConfiguracionParqueadero.getInstancia().cuposActualizadosProperty().addListener((obs, oldVal, newVal) -> {
+            actualizarTarjetasCupos(); // cuando se notifique un cambio
+        });
+
+
         actualizarTarjetasCupos();
     }
 
@@ -199,6 +205,7 @@ public class HomeController {
     }
 
     private void actualizarTarjetasCupos() {
+
         Cupo cupo = ConfiguracionParqueadero.getInstancia().getCupo();
 
         espaciosMotosLabel.setText(
@@ -215,10 +222,7 @@ public class HomeController {
     }
 
 
-    @FXML
-    void mostrarConfigurarTarifas(ActionEvent event) {
 
-    }
 
     @FXML
     void mostrarDatosParqueadero(ActionEvent event) {
@@ -240,10 +244,6 @@ public class HomeController {
 
     }
 
-    @FXML
-    void mostrarEliminarCliente(ActionEvent event) {
-
-    }
 
     @FXML
     void mostrarGenerarFactura(ActionEvent event) {
@@ -263,6 +263,21 @@ public class HomeController {
     @FXML
     void mostrarRegistrarIngreso(ActionEvent event) {
 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/registrarIngreso.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            RegistrarIngresoController controller = fxmlLoader.getController();
+            controller.iniciarReloj();
+
+            Stage stage = new Stage();
+            stage.setTitle("Registrar Ingreso");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -272,6 +287,19 @@ public class HomeController {
 
     @FXML
     void mostrarRegistrarSalida(ActionEvent event) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/registrarSalida.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            Stage stage = new Stage();
+            stage.setTitle("Salida Vehiculo");
+            stage.setMaximized(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -284,6 +312,23 @@ public class HomeController {
 
             Stage stage = new Stage();
             stage.setTitle("Registrar vehiculo");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void mostrarVehiculosActivos(ActionEvent actionEvent) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/view/vehiculosActivos.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+
+            Stage stage = new Stage();
+            stage.setTitle("Vehiculos Activos");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -311,5 +356,8 @@ public class HomeController {
     void mostrarVehiculosPorCliente(ActionEvent event) {
 
     }
+
+
+
 
 }

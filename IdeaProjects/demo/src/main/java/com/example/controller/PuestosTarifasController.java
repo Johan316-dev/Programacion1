@@ -84,8 +84,6 @@ public class PuestosTarifasController {
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close(); // Cierra solo esta ventana
 
-
-
     }
 
     @FXML
@@ -114,6 +112,8 @@ public class PuestosTarifasController {
 
         // Registrar fecha de actualización
         ConfiguracionParqueadero.getInstancia().actualizarUltimaActualizacion();
+        //LLAMAR ACTUALIZAR TARJETAS
+        ConfiguracionParqueadero.getInstancia().notificarActualizacionCupos();
 
         // Feedback opcional
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
