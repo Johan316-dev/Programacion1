@@ -4,6 +4,7 @@ import com.example.model.Cliente;
 import com.example.model.Membresia;
 import com.example.model.Vehiculo;
 import com.example.service.ClienteService;
+import com.example.service.MembresiaService;
 import com.example.service.VehiculoService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -124,6 +125,7 @@ public class GestionarMembresiaController {
      */
     ClienteService clienteService = ClienteService.getInstancia();
     VehiculoService vehiculoService = VehiculoService.getInstancia();
+    MembresiaService membresiaService = MembresiaService.getInstancia();
     //---------------------------------------------//
 
     private Vehiculo vehiculoSeleccionado; // asignado al iniciar la vista
@@ -314,6 +316,8 @@ public class GestionarMembresiaController {
         // Asociar al vehículo actual
         if (vehiculoSeleccionado != null) {
             vehiculoSeleccionado.setMembresia(membresia);
+            membresiaService.registrarMembresia(membresia);
+
         } else {
             mostrarError("Error interno: vehículo no asignado.");
             return;

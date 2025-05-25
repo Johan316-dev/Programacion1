@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.Cliente;
+import com.example.model.Vehiculo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class ClienteService {
 
 
     public void eliminarCliente(Cliente cliente){
+
         clientes.remove(cliente);
     }
 
@@ -73,7 +75,33 @@ public class ClienteService {
         return false;
     }
 
+    public void actualizarClienteCambio(Cliente cliente) {
+        // Encuentra y reemplaza el cliente en la lista
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getId().equals(cliente.getId())) {
+                clientes.set(i, cliente);
+                return;
+            }
+        }
+        clientes.add(cliente); // Si no existe, añade uno nuevo
+    }
 
+    public void cambiarClienteVehiculo(Vehiculo vehiculo, Cliente nuevoCliente) {
+        Cliente clienteAnterior = vehiculo.getCliente();
+
+        if (clienteAnterior != null) {
+            clienteAnterior.getVehiculos().remove(vehiculo);
+
+        }
+
+        vehiculo.setCliente(nuevoCliente);
+        nuevoCliente.getVehiculos().add(vehiculo);
+
+        actualizarClienteCambio(clienteAnterior);
+        actualizarClienteCambio(nuevoCliente);
+        System.out.println("Vehiculos cliente anterior: " + clienteAnterior.getVehiculos().size());
+        System.out.println("Vehiculos cliente nuevo: " + nuevoCliente.getVehiculos().size());
+    }
 
 
 }

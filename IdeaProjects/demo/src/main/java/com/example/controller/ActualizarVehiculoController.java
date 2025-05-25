@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ActualizarVehiculoController {
@@ -132,11 +133,14 @@ public class ActualizarVehiculoController {
         this.buscarClienteController = buscarClienteController;
     }
 
-    private ObservableList<Cliente> listaClientes;
+    // CARGAMOS LOS CLIENTES DEL CLIENTESERVICE
+    List<Cliente> listaClientes = clienteService.obtenerClientes();
 
-    public void setListaClientes(ObservableList<Cliente> listaClientes) {
-        this.listaClientes = listaClientes;
+    public void setListaClientes(List<Cliente> listaClientes) {
+       this.listaClientes = listaClientes;
     }
+
+    //---CLIENTE SERVICE QUE SE DEBE UTILIZAR//
 
 
 
@@ -369,21 +373,8 @@ public class ActualizarVehiculoController {
             Cliente nuevoCliente = controller.getClienteSeleccionado();
             if (nuevoCliente != null) {
 
-                Cliente clienteAnterior = vehiculo.getCliente();
+                clienteService.cambiarClienteVehiculo(vehiculo, nuevoCliente);
 
-                //Eliminar del cliente anterior
-                if (clienteAnterior != null) {
-                    System.out.println("Cliente anterior: " + clienteAnterior.getNombre());
-                    clienteAnterior.getVehiculos().remove(vehiculo);
-                }
-
-                //Asignar al nuevo cliente
-                vehiculo.setCliente(nuevoCliente);
-                nuevoCliente.getVehiculos().add(vehiculo);
-                System.out.println("Cliente nuevo: " + nuevoCliente.getNombre());
-
-                System.out.println("Vehículos del cliente anterior: " + clienteAnterior.getVehiculos());
-                System.out.println("Vehículos del cliente nuevo: " + nuevoCliente.getVehiculos());
 
                 // Refrescar tabla de clientes si se pasó la referencia
                 if (buscarClienteController != null) {

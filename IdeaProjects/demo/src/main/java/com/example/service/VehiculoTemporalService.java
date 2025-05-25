@@ -10,6 +10,15 @@ public class VehiculoTemporalService {
     private static final List<VehiculoTemporal> vehiculosEnParqueadero = new ArrayList<>();
     private static final List<VehiculoTemporal> historialVehiculos = new ArrayList<>();
 
+    private static VehiculoTemporalService instancia;
+
+    public static VehiculoTemporalService getInstancia() {
+        if (instancia == null) {
+            instancia = new VehiculoTemporalService();
+        }
+        return instancia;
+    }
+
     public static boolean estaPlacaRegistrada(String placa) {
         return vehiculosEnParqueadero.stream().anyMatch(v -> v.getPlaca().equalsIgnoreCase(placa));
     }
@@ -21,6 +30,7 @@ public class VehiculoTemporalService {
 
     public static void salidaVehiculo(String placa) {
         vehiculosEnParqueadero.removeIf(v -> v.getPlaca().equalsIgnoreCase(placa));
+
     }
 
     public static List<VehiculoTemporal> getVehiculosEnParqueadero() {
@@ -44,5 +54,11 @@ public class VehiculoTemporalService {
     public static void eliminarVehiculo(VehiculoTemporal vehiculo) {
 
         vehiculosEnParqueadero.remove(vehiculo);
+        historialVehiculos.add(vehiculo);
+
+    }
+
+    public List<VehiculoTemporal> obtenerVehiculos(){
+        return vehiculosEnParqueadero;
     }
 }

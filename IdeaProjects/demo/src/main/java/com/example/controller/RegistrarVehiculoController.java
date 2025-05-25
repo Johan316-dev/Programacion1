@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.model.*;
 import com.example.service.ClienteService;
+import com.example.service.MembresiaService;
 import com.example.service.VehiculoService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -115,6 +116,7 @@ public class RegistrarVehiculoController {
      */
     ClienteService clienteService = ClienteService.getInstancia();
     VehiculoService vehiculoService = VehiculoService.getInstancia();
+    MembresiaService membresiaService = MembresiaService.getInstancia();
     //---------------------------------------------//
 
     @FXML
@@ -245,8 +247,9 @@ public class RegistrarVehiculoController {
             membresia.setEstado("Activa");
 
             vehiculo.setMembresia(membresia);
-        }
+            membresiaService.registrarMembresia(membresia);
 
+        }
 
         Cliente clienteSeleccionado = cmbCliente.getValue();
 

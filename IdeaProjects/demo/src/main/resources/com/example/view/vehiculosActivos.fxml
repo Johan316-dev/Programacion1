@@ -44,8 +44,8 @@
                     </ComboBox>
 
                     <TextField fx:id="txtFiltroPlaca" promptText="Buscar por placa..." />
-                    <Button onAction="#filtrarVehiculos" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Filtrar" />
-                    <Button onAction="#actualizarListaVehiculos" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Actualizar" />
+                    <Button onAction="#filtrarVehiculos" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand" text="Filtrar" />
+                    <Button onAction="#actualizarListaVehiculos" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-cursor: hand" text="Actualizar" />
                 </HBox>
             </VBox>
 
@@ -55,22 +55,19 @@
 
                 <TableView fx:id="tablaVehiculosActivos" style="-fx-padding: 10px 0;" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colTicket" prefWidth="80" text="Ticket" />
                         <TableColumn fx:id="colPlacaActivos" prefWidth="100" text="Placa" />
                         <TableColumn fx:id="colTipoActivos" prefWidth="100" text="Tipo" />
-                        <TableColumn fx:id="colPuestoActivos" prefWidth="80" text="Puesto" />
                         <TableColumn fx:id="colFechaIngreso" prefWidth="120" text="Fecha Ingreso" />
                         <TableColumn fx:id="colHoraIngreso" prefWidth="100" text="Hora Ingreso" />
                         <TableColumn fx:id="colTiempoTranscurrido" prefWidth="100" text="Tiempo" />
                         <TableColumn fx:id="colTarifaActual" prefWidth="100" text="Tarifa Actual" />
-                        <TableColumn fx:id="colAcciones" prefWidth="120" text="Acciones" />
                     </columns>
                 </TableView>
 
                 <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10px 0 0 0;">
                     <Label fx:id="lblTotalVehiculosActivos" style="-fx-font-weight: bold;" text="Total de vehículos: 22" />
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button onAction="#procesarSalidaSeleccionado" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Procesar Salida Seleccionado" />
+                    <Button onAction="#procesarSalidaSeleccionado" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-cursor: hand" text="Procesar Salida Seleccionado" />
                 </HBox>
             </VBox>
         </VBox>

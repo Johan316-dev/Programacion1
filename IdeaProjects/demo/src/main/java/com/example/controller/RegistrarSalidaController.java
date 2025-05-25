@@ -78,6 +78,11 @@ public class RegistrarSalidaController {
 
     private VehiculoTemporal vehiculo;
 
+    // Método para establecer la placa en el campo de texto
+    public void setPlaca(String placa) {
+        txtBusquedaSalida.setText(placa);
+    }
+
     public void initialize() {
 
         //RADIO BUTTOM
@@ -93,6 +98,7 @@ public class RegistrarSalidaController {
     }
 
 
+
     @FXML
     void buscarVehiculo(ActionEvent event) {
 
@@ -106,7 +112,11 @@ public class RegistrarSalidaController {
         VehiculoTemporal vehiculo = VehiculoTemporalService.buscarVehiculoPorPlaca(placa);
 
         if (vehiculo == null) {
-            mostrarAlerta("No encontrado", "No se encontró ningún vehículo con la placa: " + placa);
+            // Mostrar alerta si no hay selección
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Ningun vehiculo");
+            alerta.setContentText("No existe vehiculo");
+            alerta.showAndWait();
             panelInformacionVehiculo.setVisible(false);
             return;
         }
@@ -161,12 +171,18 @@ public class RegistrarSalidaController {
         try {
             montoRecibido = Double.parseDouble(txtMontoRecibido.getText().trim());
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "Ingrese un monto válido.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error");
+            alerta.setContentText("Ingrese un monto valido");
+            alerta.showAndWait();
             return;
         }
 
         if (montoRecibido < totalPagar) {
-            mostrarAlerta("Error", "El monto recibido no cubre el total a pagar.");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error");
+            alerta.setContentText("El monto no cubre el total a pagar.");
+            alerta.showAndWait();
             return;
         }
 
@@ -249,7 +265,7 @@ public class RegistrarSalidaController {
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

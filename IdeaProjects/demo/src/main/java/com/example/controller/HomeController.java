@@ -1,11 +1,10 @@
 package com.example.controller;
 
-import com.example.model.ConfiguracionParqueadero;
-import com.example.model.Cupo;
-import com.example.model.HelloApplication;
-import com.example.model.Parqueadero;
+import com.example.model.*;
+import com.example.service.MembresiaService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,16 +36,16 @@ public class HomeController {
     private Button btnCrearCliente;
 
     @FXML
-    private TableColumn<?, ?> colCliente;
+    private TableColumn<Membresia, String> colCliente;
 
     @FXML
-    private TableColumn<?, ?> colFechaVencimiento;
+    private TableColumn<Membresia, String> colFechaVencimiento;
 
     @FXML
-    private TableColumn<?, ?> colPlaca;
+    private TableColumn<Membresia, Double> colPlaca;
 
     @FXML
-    private TableColumn<?, ?> colVehiculo;
+    private TableColumn<Membresia, String> colVehiculo;
 
     @FXML
     private StackPane contenedorPrincipal;
@@ -76,7 +75,9 @@ public class HomeController {
     private ImageView imgHome;
 
     @FXML
-    private TableView<?> tablaMembresiasPorVencer;
+    private TableView<Membresia> tablaMembresiasPorVencer;
+
+    MembresiaService membresiaService = MembresiaService.getInstancia();
 
     @FXML
     public void initialize() {
@@ -88,6 +89,8 @@ public class HomeController {
 
         actualizarTarjetasCupos();
     }
+
+
 
     @FXML
     void cerrarSesion(ActionEvent event) {

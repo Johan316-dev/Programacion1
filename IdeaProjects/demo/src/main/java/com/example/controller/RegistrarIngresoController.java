@@ -100,7 +100,7 @@ public class RegistrarIngresoController {
     void registrarIngreso(ActionEvent event) {
 
         if(cmbTipoVehiculo.getValue() == null){
-            mostrarAlerta("Error", "Seleccione un tipo de vehiculo");
+            mostrarAlertaError("Error", "Seleccione un tipo de vehiculo");
             return;
         }
 
@@ -108,7 +108,7 @@ public class RegistrarIngresoController {
         String tipoVehiculo = cmbTipoVehiculo.getValue();
 
         if (VehiculoTemporalService.estaPlacaRegistrada(placa)) {
-            mostrarAlerta("Error", "Ya hay un vehículo con esta placa en el parqueadero.");
+            mostrarAlertaError("Error", "Ya hay un vehículo con esta placa en el parqueadero.");
             return;
         }
 
@@ -139,7 +139,7 @@ public class RegistrarIngresoController {
 
         actualizarEtiquetasDisponibilidad();
         ConfiguracionParqueadero.getInstancia().notificarActualizacionCupos();
-        mostrarAlerta("Ingreso registrado", "Ingreso del vehiculo " + vehiculo.getPlaca() + " registrado correctamente.");
+        mostrarAlertaConfirm("Ingreso registrado", "Ingreso del vehiculo " + vehiculo.getPlaca() + " registrado correctamente.");
 
     }
 
@@ -147,13 +147,13 @@ public class RegistrarIngresoController {
 
         // Validar que la placa no esté vacía
         if (placa.isEmpty()) {
-            mostrarAlerta("Error", "La placa no puede estar vacía");
+            mostrarAlertaError("Error", "La placa no puede estar vacía");
             return false;
         }
 
         // Validar longitud máxima
         if (placa.length() > 6) {
-            mostrarAlerta("Error", "La placa no puede tener más de 6 caracteres");
+            mostrarAlertaError("Error", "La placa no puede tener más de 6 caracteres");
             return false;
         }
 
@@ -161,14 +161,14 @@ public class RegistrarIngresoController {
         switch (tipoVehiculo) {
             case "Moto":
                 if (!placa.matches("^[A-Z]{3}\\d{2}[A-Z]$")) {
-                    mostrarAlerta("Error", "Formato de placa inválido para moto. Debe ser ABC12D");
+                    mostrarAlertaError("Error", "Formato de placa inválido para moto. Debe ser ABC12D");
                     return false;
                 }
                 break;
             case "Automóvil":
             case "Camión":
                 if (!placa.matches("^[A-Z]{3}\\d{3}$")) {
-                    mostrarAlerta("Error", "Formato de placa inválido. Debe ser ABC123");
+                    mostrarAlertaError("Error", "Formato de placa inválido. Debe ser ABC123");
                     return false;
                 }
                 break;
@@ -177,8 +177,16 @@ public class RegistrarIngresoController {
         return true;
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private void mostrarAlertaConfirm(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    private void mostrarAlertaError(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

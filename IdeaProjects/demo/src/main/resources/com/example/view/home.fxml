@@ -140,17 +140,6 @@
                     <Button onAction="#mostrarAnadirCliente" prefHeight="40" prefWidth="150" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-cursor: hand" text="Añadir Cliente" />
                 </HBox>
 
-                <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #ecf0f1; -fx-padding: 10px; -fx-background-radius: 5px;">
-                    <Label style="-fx-font-weight: bold;" text="Membresías próximas a vencer" />
-                    <TableView fx:id="tablaMembresiasPorVencer" prefHeight="150">
-                        <columns>
-                            <TableColumn fx:id="colCliente" prefWidth="150" text="Cliente" />
-                            <TableColumn fx:id="colVehiculo" prefWidth="100" text="Vehículo" />
-                            <TableColumn fx:id="colPlaca" prefWidth="100" text="Placa" />
-                            <TableColumn fx:id="colFechaVencimiento" prefWidth="150" text="Fecha Vencimiento" />
-                        </columns>
-                    </TableView>
-                </VBox>
             </VBox>
 
             <!-- Contenedor para cargar las diferentes vistas -->
