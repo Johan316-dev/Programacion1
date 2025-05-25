@@ -77,7 +77,7 @@
                 <VBox spacing="5">
                     <Button maxWidth="Infinity" onAction="#mostrarDatosParqueadero" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Datos del Parqueadero" />
                     <Button maxWidth="Infinity" onAction="#mostrarConfigurarEspacios" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Espacios y Tarifas" />
-                    <Button maxWidth="Infinity" onAction="#mostrarHistorialPagos" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand" text="Historial de Pagos" />
+                    <Button maxWidth="Infinity" onAction="#mostrarHistorialPagos" style="-fx-background-color: transparent; -fx-text-fill: #14bdba; -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-color: #90bad9" text="Historial de Pagos" />
                 </VBox>
             </TitledPane>
 

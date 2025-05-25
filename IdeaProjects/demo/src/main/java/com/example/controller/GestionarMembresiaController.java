@@ -2,9 +2,11 @@ package com.example.controller;
 
 import com.example.model.Cliente;
 import com.example.model.Membresia;
+import com.example.model.Pago;
 import com.example.model.Vehiculo;
 import com.example.service.ClienteService;
 import com.example.service.MembresiaService;
+import com.example.service.PagoService;
 import com.example.service.VehiculoService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -126,6 +128,7 @@ public class GestionarMembresiaController {
     ClienteService clienteService = ClienteService.getInstancia();
     VehiculoService vehiculoService = VehiculoService.getInstancia();
     MembresiaService membresiaService = MembresiaService.getInstancia();
+    PagoService pagoService = PagoService.getInstancia();
     //---------------------------------------------//
 
     private Vehiculo vehiculoSeleccionado; // asignado al iniciar la vista
@@ -310,13 +313,26 @@ public class GestionarMembresiaController {
         Date fechaInicioDate = Date.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date fechaFinDate = Date.from(fechaFinLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+
         // Crear la membresía
         Membresia membresia = new Membresia(tipoPlan, fechaInicioDate, fechaFinDate, costoTotal, estado);
+
+        Pago pago = new Pago(
+                vehiculoSeleccionado.getPlaca(),
+                vehiculoSeleccionado.getModelo(),
+                fechaInicio,
+                fechaFinLocal,
+                costoTotal,
+                true // o false según tenga membresía
+        );
+
 
         // Asociar al vehículo actual
         if (vehiculoSeleccionado != null) {
             vehiculoSeleccionado.setMembresia(membresia);
             membresiaService.registrarMembresia(membresia);
+            pagoService.registrarPago(pago);
+
 
         } else {
             mostrarError("Error interno: vehículo no asignado.");

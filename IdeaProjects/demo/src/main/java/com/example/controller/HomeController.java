@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.model.*;
 import com.example.service.MembresiaService;
+import com.example.service.PagoService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,10 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,10 +22,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class HomeController {
 
@@ -78,6 +80,7 @@ public class HomeController {
     private TableView<Membresia> tablaMembresiasPorVencer;
 
     MembresiaService membresiaService = MembresiaService.getInstancia();
+    PagoService pagoService = PagoService.getInstancia();
 
     @FXML
     public void initialize() {
@@ -256,6 +259,35 @@ public class HomeController {
     @FXML
     void mostrarHistorialPagos(ActionEvent event) {
 
+        List<Pago> pagos = pagoService.getHistorial();
+        String ruta = "C:/REPORTES/pagos.pdf";
+        ReporteHistorialPagos.generarPDF(pagos, ruta);
+
+        // Mostrar alerta si no hay selección
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setHeaderText("Reporte generado");
+        alerta.setContentText("El pdf ha sido generado correctamente");
+        alerta.showAndWait();
+
+        // Intentar abrir el PDF
+        try {
+            File file = new File(ruta);
+            if (file.exists()) {
+                Desktop.getDesktop().open(file);
+            } else {
+                mostrarAlerta("Error", "El archivo PDF no fue encontrado.");
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudo abrir el PDF: " + e.getMessage());
+        }
+
+    }
+
+    public void mostrarAlerta(String title, String message) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setHeaderText("ERROT");
+        alerta.setContentText("NO HAY PDF");
+        alerta.showAndWait();
     }
 
     @FXML

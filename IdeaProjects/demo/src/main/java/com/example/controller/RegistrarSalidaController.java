@@ -1,9 +1,7 @@
 package com.example.controller;
 
-import com.example.model.ConfiguracionParqueadero;
-import com.example.model.Cupo;
-import com.example.model.Tarifa;
-import com.example.model.VehiculoTemporal;
+import com.example.model.*;
+import com.example.service.PagoService;
 import com.example.service.VehiculoTemporalService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,6 +75,8 @@ public class RegistrarSalidaController {
 
 
     private VehiculoTemporal vehiculo;
+
+    PagoService pagoService = PagoService.getInstancia();
 
     // Método para establecer la placa en el campo de texto
     public void setPlaca(String placa) {
@@ -212,6 +212,24 @@ public class RegistrarSalidaController {
 
         // Actualizar etiquetas y estado
         ConfiguracionParqueadero.getInstancia().notificarActualizacionCupos();
+
+
+        // Fechas
+        LocalDateTime fechaHoraIngreso = vehiculo.getFechaHoraIngreso();
+        LocalDateTime fechaHoraSalida = LocalDateTime.now();
+
+        // Crear objeto Pago
+        Pago pago = new Pago(
+                placa,
+                vehiculo.getTipoVehiculo(),
+                fechaHoraIngreso.toLocalDate(),
+                fechaHoraSalida.toLocalDate(),
+                totalPagar,
+                false // No es membresía
+
+        );
+
+        pagoService.registrarPago(pago);
 
         mostrarAlerta("Salida registrada", "Salida registrada correctamente.\nCambio: $" + String.format("%,.0f", cambio));
 
